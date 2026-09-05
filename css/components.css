@@ -1,0 +1,205 @@
+/* ==========================================================================
+   components.css — buttons, cards, tiles, badges, chips, floating actions
+   ========================================================================== */
+
+/* Buttons ---------------------------------------------------------------- */
+.btn {
+  --btn-bg: var(--navy-700);
+  --btn-fg: #fff;
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  padding: 13px 24px;
+  background: var(--btn-bg); color: var(--btn-fg);
+  border: 1px solid transparent; border-radius: 999px;
+  font-weight: 600; font-size: .96rem; line-height: 1;
+  cursor: pointer; text-align: center;
+  transition: transform .18s var(--ease), box-shadow .2s, background .2s, color .2s;
+  box-shadow: 0 6px 18px rgba(11, 32, 70, .16);
+}
+.btn:hover { color: var(--btn-fg); transform: translateY(-2px); box-shadow: 0 12px 26px rgba(11, 32, 70, .22); }
+.btn svg { width: 17px; height: 17px; flex: none; }
+.btn--green { --btn-bg: var(--green-600); box-shadow: 0 6px 18px rgba(10, 138, 61, .24); }
+.btn--green:hover { box-shadow: 0 12px 26px rgba(10, 138, 61, .3); }
+.btn--ghost {
+  --btn-bg: transparent; --btn-fg: var(--navy-700);
+  border-color: rgba(18, 58, 126, .28); box-shadow: none;
+}
+.btn--ghost:hover { background: var(--navy-100); box-shadow: none; }
+.btn--light { --btn-bg: #fff; --btn-fg: var(--navy-800); }
+.btn--outline-light {
+  --btn-bg: transparent; --btn-fg: #fff;
+  border-color: rgba(255, 255, 255, .4); box-shadow: none;
+}
+.btn--outline-light:hover { background: rgba(255, 255, 255, .12); box-shadow: none; }
+.btn--sm { padding: 10px 18px; font-size: .88rem; }
+.btn--block { display: flex; width: 100%; }
+
+/* Badges and chips ------------------------------------------------------- */
+.chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 14px; border-radius: 999px;
+  background: var(--navy-100); color: var(--navy-700);
+  font-size: .82rem; font-weight: 600; letter-spacing: .02em;
+}
+.chip--green { background: var(--green-100); color: var(--green-700); }
+.chip--glass {
+  background: rgba(255, 255, 255, .12); color: #fff;
+  border: 1px solid rgba(255, 255, 255, .22);
+}
+.chip::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: currentColor; opacity: .7; flex: none;
+}
+
+.num-badge {
+  display: inline-grid; place-items: center;
+  width: 38px; height: 38px; flex: none;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, .16);
+  border: 1px solid rgba(255, 255, 255, .26);
+  font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: #fff;
+}
+
+/* Card ------------------------------------------------------------------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s;
+}
+.card--hover:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: rgba(18, 58, 126, .22); }
+.card__body { padding: 24px; }
+
+/* Icon block ------------------------------------------------------------- */
+.icon-badge {
+  display: grid; place-items: center;
+  width: 52px; height: 52px; flex: none;
+  border-radius: 12px;
+  background: var(--navy-100); color: var(--navy-700);
+}
+.icon-badge svg { width: 26px; height: 26px; }
+.icon-badge--green { background: var(--green-100); color: var(--green-700); }
+.icon-badge--solid { background: var(--navy-700); color: #fff; }
+.icon-badge--glass { background: rgba(255, 255, 255, .12); color: #fff; border: 1px solid rgba(255, 255, 255, .2); }
+
+/* Feature row (icon + text) --------------------------------------------- */
+.feature { display: flex; gap: 16px; align-items: flex-start; }
+.feature h3 { margin-bottom: 4px; font-size: 1.08rem; letter-spacing: .04em; text-transform: uppercase; }
+.feature p { font-size: .94rem; color: var(--muted); }
+
+/* Product category panel ------------------------------------------------- */
+.cat {
+  display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--line);
+  border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.cat:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.cat__head {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px;
+  background: linear-gradient(120deg, var(--navy-800), var(--navy-600));
+  color: #fff;
+}
+.cat__head h3 { color: #fff; margin: 0; font-size: 1.22rem; letter-spacing: .06em; text-transform: uppercase; }
+.cat__banner {
+  position: relative; height: 128px;
+  background: linear-gradient(140deg, #dde7f6 0%, #eef3fb 55%, #e3efe8 100%);
+  border-bottom: 1px solid var(--line);
+  display: grid; place-items: center; overflow: hidden;
+}
+.cat__banner svg { width: 100%; height: 100%; }
+.cat__items {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--line); border-bottom: 1px solid var(--line);
+}
+.cat__item {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 16px 10px; background: #fff; text-align: center;
+  transition: background .2s;
+}
+.cat__item:hover { background: var(--surface-soft); }
+.cat__item svg { width: 34px; height: 34px; color: var(--navy-600); }
+.cat__item span {
+  font-size: .74rem; font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--ink); line-height: 1.3;
+}
+.cat__foot {
+  display: flex; flex-wrap: wrap; gap: 8px 16px;
+  padding: 14px 20px; margin-top: auto;
+  background: var(--surface-soft);
+  font-size: .8rem; font-weight: 600; color: var(--navy-700);
+}
+.cat__foot li { display: flex; align-items: center; gap: 7px; }
+.cat__foot li::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green-500); flex: none;
+}
+
+/* Strip of extra categories --------------------------------------------- */
+.strip {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  margin-top: 22px;
+}
+.strip__item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 20px; border-radius: var(--radius);
+  background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+}
+.strip__item h3 { margin: 0 0 2px; font-size: 1.02rem; letter-spacing: .05em; text-transform: uppercase; }
+.strip__item span { display: block; font-size: .84rem; color: var(--muted); }
+
+/* Checklist -------------------------------------------------------------- */
+.checklist li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 0; border-bottom: 1px dashed rgba(255, 255, 255, .16);
+  font-weight: 500;
+}
+.checklist li:last-child { border-bottom: 0; }
+.checklist svg { width: 20px; height: 20px; flex: none; color: var(--green-500); margin-top: 2px; }
+
+/* Contact cards ---------------------------------------------------------- */
+.contact-card { display: flex; gap: 16px; align-items: flex-start; padding: 20px; }
+.contact-card h3 { font-size: 1rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; }
+.contact-card a, .contact-card p { font-size: .97rem; color: var(--body); margin: 0; }
+.contact-card a { display: block; font-weight: 600; color: var(--navy-700); }
+.contact-card a:hover { color: var(--green-600); }
+
+/* Form ------------------------------------------------------------------- */
+.field { margin-bottom: 16px; }
+.field label {
+  display: block; margin-bottom: 6px;
+  font-size: .85rem; font-weight: 600; color: var(--ink); letter-spacing: .02em;
+}
+.field input, .field select, .field textarea {
+  width: 100%; padding: 12px 14px;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: #fff; color: var(--ink); font-family: inherit; font-size: .95rem;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; border-color: var(--navy-600);
+  box-shadow: 0 0 0 3px rgba(26, 79, 160, .14);
+}
+.field textarea { min-height: 110px; resize: vertical; }
+.form-note { font-size: .82rem; color: var(--muted); margin-top: 12px; }
+
+/* Floating actions ------------------------------------------------------- */
+.floating { position: fixed; right: 18px; bottom: 18px; z-index: 90; display: grid; gap: 12px; }
+.fab {
+  display: grid; place-items: center;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--navy-700); color: #fff; border: 0; cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform .2s var(--ease), opacity .25s, visibility .25s;
+}
+.fab:hover { transform: translateY(-3px); color: #fff; }
+.fab svg { width: 26px; height: 26px; }
+.fab--whatsapp { background: #25d366; }
+.fab--top { opacity: 0; visibility: hidden; background: var(--navy-800); }
+.fab--top.is-visible { opacity: 1; visibility: visible; }
+
+/* Reveal on scroll ------------------------------------------------------- */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.reveal.is-in { opacity: 1; transform: none; }

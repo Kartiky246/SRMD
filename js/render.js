@@ -1,0 +1,192 @@
+/* ==========================================================================
+   render.js — builds the data-driven sections of the page from data.js.
+   Every target element is marked with [data-render="<key>"] in index.html.
+   ========================================================================== */
+(function (ns) {
+  'use strict';
+
+  var icon = ns.icon;
+  var art = ns.art;
+
+  function esc(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function fill(key, html) {
+    var nodes = document.querySelectorAll('[data-render="' + key + '"]');
+    for (var i = 0; i < nodes.length; i++) { nodes[i].innerHTML = html; }
+    return nodes.length;
+  }
+
+  function join(list, fn) { return list.map(fn).join(''); }
+
+  /* Individual blocks ------------------------------------------------------ */
+
+  function trustBar() {
+    return join(ns.trust, function (t) {
+      return '<div class="trustbar__item">' + icon(t.icon) +
+             '<div><strong>' + esc(t.title) + '</strong>' +
+             '<span>' + esc(t.text) + '</span></div></div>';
+    });
+  }
+
+  function aboutText() {
+    return join(ns.about.paragraphs, function (p) { return '<p>' + esc(p) + '</p>'; });
+  }
+
+  function aboutFeatures() {
+    return join(ns.about.features, function (f) {
+      return '<div class="feature reveal">' +
+             '<span class="icon-badge icon-badge--green">' + icon(f.icon) + '</span>' +
+             '<div><h3>' + esc(f.title) + '</h3><p>' + esc(f.text) + '</p></div></div>';
+    });
+  }
+
+  function stats() {
+    return join(ns.about.stats, function (s) {
+      return '<div class="stat reveal"><strong>' + esc(s.value) + '</strong>' +
+             '<span>' + esc(s.label) + '</span></div>';
+    });
+  }
+
+  function catalogueIndex() {
+    return join(ns.catalogueIndex, function (row) {
+      return '<a class="index-item" href="' + esc(row.href) + '">' +
+             '<b>' + esc(row.no) + '</b>' + esc(row.label) + '</a>';
+    });
+  }
+
+  function categoryCard(cat) {
+    var items = join(cat.items, function (it) {
+      return '<div class="cat__item">' + icon(it.icon) + '<span>' + esc(it.name) + '</span></div>';
+    });
+    var points = join(cat.points, function (p) { return '<li>' + esc(p) + '</li>'; });
+
+    return '<article class="cat reveal" id="' + esc(cat.id) + '">' +
+             '<header class="cat__head">' +
+               '<span class="num-badge">' + esc(cat.no) + '</span>' +
+               '<h3>' + esc(cat.title) + '</h3>' +
+             '</header>' +
+             '<div class="cat__banner">' + art(cat.art) + '</div>' +
+             '<div class="cat__items">' + items + '</div>' +
+             '<ul class="cat__foot">' + points + '</ul>' +
+           '</article>';
+  }
+
+  function categories() { return join(ns.categories, categoryCard); }
+
+  function moreCategories() {
+    return join(ns.moreCategories, function (c) {
+      return '<div class="strip__item reveal">' +
+               '<span class="icon-badge">' + icon(c.icon) + '</span>' +
+               '<div><h3>' + esc(c.no) + ' &middot; ' + esc(c.title) + '</h3>' +
+               '<span>' + esc(c.text) + '</span></div>' +
+             '</div>';
+    });
+  }
+
+  function why() {
+    return join(ns.why, function (w) {
+      return '<article class="card card--hover why__card reveal">' +
+               '<span class="icon-badge icon-badge--solid">' + icon(w.icon) + '</span>' +
+               '<h3>' + esc(w.title) + '</h3><p>' + esc(w.text) + '</p>' +
+             '</article>';
+    });
+  }
+
+  function services() {
+    return join(ns.services, function (s) {
+      return '<article class="card card--hover service reveal">' +
+               '<span class="icon-badge icon-badge--green">' + icon(s.icon) + '</span>' +
+               '<div><h3>' + esc(s.title) + '</h3><p>' + esc(s.text) + '</p></div>' +
+             '</article>';
+    });
+  }
+
+  function qualitySteps() {
+    return join(ns.quality.steps, function (step) {
+      return '<li>' + icon('check') + '<span>' + esc(step) + '</span></li>';
+    });
+  }
+
+  function qualityNote() { return esc(ns.quality.note); }
+  function qualityArt() { return art('quality'); }
+  function siteArt() { return art('site'); }
+
+  /* Contact details are also written into href attributes ------------------ */
+  function contactDetails() {
+    var c = ns.company;
+
+    var phones = join(c.phones, function (p) {
+      return '<a href="tel:+91' + p.replace(/\s/g, '') + '">+91 ' + esc(p) + '</a>';
+    });
+
+    return '' +
+      '<div class="card contact-card reveal">' +
+        '<span class="icon-badge">' + icon('pin') + '</span>' +
+        '<div><h3>Address</h3><p>' + esc(c.address) + '</p></div>' +
+      '</div>' +
+      '<div class="card contact-card reveal">' +
+        '<span class="icon-badge icon-badge--green">' + icon('phone') + '</span>' +
+        '<div><h3>Call Us</h3>' + phones + '</div>' +
+      '</div>' +
+      '<div class="card contact-card reveal">' +
+        '<span class="icon-badge">' + icon('mail') + '</span>' +
+        '<div><h3>Email</h3><a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></div>' +
+      '</div>' +
+      '<div class="card contact-card reveal">' +
+        '<span class="icon-badge icon-badge--green">' + icon('clock') + '</span>' +
+        '<div><h3>Business Hours</h3><p>' + esc(c.hours) + '</p></div>' +
+      '</div>';
+  }
+
+  function footerContact() {
+    var c = ns.company;
+    var phones = join(c.phones, function (p) {
+      return '<li><a href="tel:+91' + p.replace(/\s/g, '') + '">+91 ' + esc(p) + '</a></li>';
+    });
+    return '<li>' + esc(c.address) + '</li>' + phones +
+           '<li><a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></li>';
+  }
+
+  /* Attribute level bindings ---------------------------------------------- */
+  function bindLinks() {
+    var c = ns.company;
+    var wa = 'https://wa.me/' + c.whatsapp;
+    var tel = 'tel:+91' + c.phones[0].replace(/\s/g, '');
+
+    document.querySelectorAll('[data-link="whatsapp"]').forEach(function (el) { el.href = wa; });
+    document.querySelectorAll('[data-link="tel"]').forEach(function (el) {
+      el.href = tel;
+      if (el.hasAttribute('data-fill-phone')) { el.textContent = c.phones[0]; }
+    });
+    document.querySelectorAll('[data-link="mail"]').forEach(function (el) { el.href = 'mailto:' + c.email; });
+    document.querySelectorAll('[data-text="phone-primary"]').forEach(function (el) { el.textContent = '+91 ' + c.phones[0]; });
+    document.querySelectorAll('[data-text="email"]').forEach(function (el) { el.textContent = c.email; });
+    document.querySelectorAll('[data-text="year"]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
+    document.querySelectorAll('[data-text="company"]').forEach(function (el) { el.textContent = c.name; });
+  }
+
+  /* Public entry ----------------------------------------------------------- */
+  ns.render = function () {
+    fill('trust', trustBar());
+    fill('about-text', aboutText());
+    fill('about-features', aboutFeatures());
+    fill('stats', stats());
+    fill('catalogue-index', catalogueIndex());
+    fill('categories', categories());
+    fill('more-categories', moreCategories());
+    fill('why', why());
+    fill('services', services());
+    fill('quality-steps', qualitySteps());
+    fill('quality-note', qualityNote());
+    fill('quality-art', qualityArt());
+    fill('site-art', siteArt());
+    fill('contact-details', contactDetails());
+    fill('footer-contact', footerContact());
+    bindLinks();
+  };
+
+})(window.SRMD = window.SRMD || {});
