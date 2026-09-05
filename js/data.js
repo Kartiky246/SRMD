@@ -12,7 +12,10 @@
     phones: ['94675 44433', '85058 88809'],
     email: 'srmdindia@gmail.com',
     website: 'srmdindia.com',
-    whatsapp: '919467544433',      /* country code + number, digits only */
+    /* Country code + number, digits only. This must be a number that is
+       actually registered on WhatsApp - 94675 44433 is not, so chats open on
+       85058 88809. Calls still go to the first number in `phones`. */
+    whatsapp: '918505888809',
     hours: 'Mon - Sat, 9:00 AM - 7:00 PM'
   };
 

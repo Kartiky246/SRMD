@@ -71,7 +71,8 @@ page updates; no HTML editing needed.
 ns.company = {
   phones: ['94675 44433', '85058 88809'],
   email: 'srmdindia@gmail.com',
-  whatsapp: '919467544433',   // country code + number, digits only
+  whatsapp: '918505888809',   // country code + number, digits only -
+                              // must be a number registered on WhatsApp
   ...
 };
 ```
