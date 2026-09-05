@@ -61,95 +61,98 @@
     { no: '12', label: 'Contact Us',                   href: '#contact' }
   ];
 
-  /* Product categories ---------------------------------------------------- */
+  /* Product categories -----------------------------------------------------
+     Item images live at  asset/images/parts/<key>-<img>.jpg
+     Banner photos at     asset/images/machines/<key>.jpg
+     Both are cut from the printed catalogue by tools/extract_images.py    */
   ns.categories = [
     {
-      id: 'cat-jaw', no: '01', title: 'Jaw Crusher Parts', art: 'jaw',
+      id: 'cat-jaw', no: '01', key: 'jaw', title: 'Jaw Crusher Parts',
       items: [
-        { name: 'Jaw Plates', icon: 'plate' },
-        { name: 'Toggle Plates & Seats', icon: 'toggle' },
-        { name: 'Pitman', icon: 'pitman' },
-        { name: 'Side Plates', icon: 'frame' },
-        { name: 'Flywheel & Pulley', icon: 'pulley' },
-        { name: 'Wedges', icon: 'wedge' },
-        { name: 'Bearings', icon: 'bearing' },
-        { name: 'Shims', icon: 'shim' },
-        { name: 'Complete Jaw Crusher Spares', icon: 'package' }
+        { name: 'Jaw Plates', img: 'jaw-plates' },
+        { name: 'Toggle Plates & Seats', img: 'toggle-plates' },
+        { name: 'Pitman', img: 'pitman' },
+        { name: 'Side Plates', img: 'side-plates' },
+        { name: 'Flywheel & Pulley', img: 'flywheel-pulley' },
+        { name: 'Wedges', img: 'wedges' },
+        { name: 'Bearings', img: 'bearings' },
+        { name: 'Shims', img: 'shims' },
+        { name: 'Complete Jaw Crusher Spares', img: 'complete-spares' }
       ],
       points: ['High strength', 'Wear resistant', 'Accurate dimensions', 'Longer life']
     },
     {
-      id: 'cat-cone', no: '02', title: 'Cone Crusher Parts', art: 'cone',
+      id: 'cat-cone', no: '02', key: 'cone', title: 'Cone Crusher Parts',
       items: [
-        { name: 'Mantle', icon: 'mantle' },
-        { name: 'Concave', icon: 'concave' },
-        { name: 'Bowl Liner', icon: 'ring' },
-        { name: 'Main Shaft', icon: 'shaft' },
-        { name: 'Thrust Plate', icon: 'thrust' },
-        { name: 'Eccentric Assembly', icon: 'eccentric' },
-        { name: 'Bronze Bushes', icon: 'bush' },
-        { name: 'Dust Seal / O-Rings', icon: 'seal' },
-        { name: 'Hydraulic & Lubrication Parts', icon: 'hydraulic' }
+        { name: 'Mantle', img: 'mantle' },
+        { name: 'Concave', img: 'concave' },
+        { name: 'Bowl Liner', img: 'bowl-liner' },
+        { name: 'Main Shaft', img: 'main-shaft' },
+        { name: 'Thrust Plate', img: 'thrust-plate' },
+        { name: 'Eccentric Assembly', img: 'eccentric-assembly' },
+        { name: 'Bronze Bushes', img: 'bronze-bushes' },
+        { name: 'Dust Seal / O-Rings', img: 'dust-seal' },
+        { name: 'Hydraulic & Lubrication Parts', img: 'hydraulic-parts' }
       ],
       points: ['Precision engineered', 'High wear resistance', 'Reliable performance']
     },
     {
-      id: 'cat-vsi', no: '03', title: 'VSI Crusher Parts', art: 'vsi',
+      id: 'cat-vsi', no: '03', key: 'vsi', title: 'VSI Crusher Parts',
       items: [
-        { name: 'Rotor Assembly', icon: 'rotor' },
-        { name: 'Tips & Tip Plates', icon: 'tip' },
-        { name: 'Distributor Plate', icon: 'distributor' },
-        { name: 'Wear Plates', icon: 'wear' },
-        { name: 'Cavity Wear Plates', icon: 'plate' },
-        { name: 'Shaft', icon: 'shaft' },
-        { name: 'Bearings', icon: 'bearing' },
-        { name: 'Labyrinth Seal', icon: 'labyrinth' },
-        { name: 'Complete VSI Spares', icon: 'package' }
+        { name: 'Rotor Assembly', img: 'rotor-assembly' },
+        { name: 'Tips & Tip Plates', img: 'tips-tip-plates' },
+        { name: 'Distributor Plate', img: 'distributor-plate' },
+        { name: 'Wear Plates', img: 'wear-plates' },
+        { name: 'Cavity Wear Plates', img: 'cavity-wear-plates' },
+        { name: 'Shaft', img: 'shaft' },
+        { name: 'Bearings', img: 'bearings' },
+        { name: 'Labyrinth Seal', img: 'labyrinth-seal' },
+        { name: 'Complete VSI Spares', img: 'complete-spares' }
       ],
       points: ['Superior quality', 'High impact strength', 'Maximum durability']
     },
     {
-      id: 'cat-screen', no: '04', title: 'Vibrating Screen Parts', art: 'screen',
+      id: 'cat-screen', no: '04', key: 'screen', title: 'Vibrating Screen Parts',
       items: [
-        { name: 'Screen Mesh', icon: 'mesh' },
-        { name: 'Exciter Assembly', icon: 'exciter' },
-        { name: 'Bearings', icon: 'bearing' },
-        { name: 'Springs', icon: 'spring' },
-        { name: 'Side Plates', icon: 'frame' },
-        { name: 'Deck Components', icon: 'deck' },
-        { name: 'Rubber Balls', icon: 'ball' },
-        { name: 'Wedge Clamp', icon: 'clamp' },
-        { name: 'Screen Spares', icon: 'package' }
+        { name: 'Screen Mesh', img: 'screen-mesh' },
+        { name: 'Exciter Assembly', img: 'exciter-assembly' },
+        { name: 'Bearings', img: 'bearings' },
+        { name: 'Springs', img: 'springs' },
+        { name: 'Side Plates', img: 'side-plates' },
+        { name: 'Deck Components', img: 'deck-components' },
+        { name: 'Rubber Balls', img: 'rubber-balls' },
+        { name: 'Wedge Clamp', img: 'wedge-clamp' },
+        { name: 'Screen Spares', img: 'screen-spares' }
       ],
       points: ['High efficiency', 'Smooth operation', 'Long service life']
     },
     {
-      id: 'cat-conveyor', no: '05', title: 'Conveyor System', art: 'conveyor',
+      id: 'cat-conveyor', no: '05', key: 'conveyor', title: 'Conveyor System',
       items: [
-        { name: 'Conveyor Rollers', icon: 'roller' },
-        { name: 'Idlers', icon: 'idler' },
-        { name: 'Pulley', icon: 'pulley' },
-        { name: 'Belts', icon: 'belt' },
-        { name: 'Bearings', icon: 'bearing' },
-        { name: 'Rubber Components', icon: 'rubber' },
-        { name: 'Skirting Rubber', icon: 'skirt' },
-        { name: 'Impact Idlers', icon: 'idler' },
-        { name: 'Conveyor Accessories', icon: 'package' }
+        { name: 'Conveyor Rollers', img: 'conveyor-rollers' },
+        { name: 'Idlers', img: 'idlers' },
+        { name: 'Pulley', img: 'pulley' },
+        { name: 'Belts', img: 'belts' },
+        { name: 'Bearings', img: 'bearings' },
+        { name: 'Rubber Components', img: 'rubber-components' },
+        { name: 'Skirting Rubber', img: 'skirting-rubber' },
+        { name: 'Impact Idlers', img: 'impact-idlers' },
+        { name: 'Conveyor Accessories', img: 'accessories' }
       ],
       points: ['Reliable movement', 'Strong & durable', 'Low maintenance']
     },
     {
-      id: 'cat-plant', no: '06', title: 'Crusher Plant Equipment', art: 'plant',
+      id: 'cat-plant', no: '06', key: 'plant', title: 'Crusher Plant Equipment',
       items: [
-        { name: 'Feeders', icon: 'feeder' },
-        { name: 'Hoppers', icon: 'hopper' },
-        { name: 'Chutes', icon: 'chute' },
-        { name: 'Conveyors', icon: 'conveyor' },
-        { name: 'Vibrating Screens', icon: 'screen' },
-        { name: 'Structural Components', icon: 'structure' },
-        { name: 'Hydraulic Systems', icon: 'hydraulic' },
-        { name: 'Lubrication Systems', icon: 'lube' },
-        { name: 'Electrical Controls', icon: 'electric' }
+        { name: 'Feeders', img: 'feeders' },
+        { name: 'Hoppers', img: 'hoppers' },
+        { name: 'Chutes', img: 'chutes' },
+        { name: 'Conveyors', img: 'conveyors' },
+        { name: 'Vibrating Screens', img: 'vibrating-screens' },
+        { name: 'Structural Components', img: 'structural-components' },
+        { name: 'Hydraulic Systems', img: 'hydraulic-systems' },
+        { name: 'Lubrication Systems', img: 'lubrication-systems' },
+        { name: 'Electrical Controls', img: 'electrical-controls' }
       ],
       points: ['Complete range of equipment for efficient & reliable crushing operations']
     }

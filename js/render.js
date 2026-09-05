@@ -6,7 +6,9 @@
   'use strict';
 
   var icon = ns.icon;
-  var art = ns.art;
+
+  var PARTS = 'asset/images/parts/';
+  var MACHINES = 'asset/images/machines/';
 
   function esc(str) {
     return String(str).replace(/[&<>"']/g, function (c) {
@@ -60,7 +62,11 @@
 
   function categoryCard(cat) {
     var items = join(cat.items, function (it) {
-      return '<div class="cat__item">' + icon(it.icon) + '<span>' + esc(it.name) + '</span></div>';
+      return '<figure class="cat__item">' +
+               '<img src="' + PARTS + cat.key + '-' + it.img + '.jpg" alt="' + esc(it.name) +
+               '" loading="lazy" decoding="async" width="340" height="340">' +
+               '<figcaption>' + esc(it.name) + '</figcaption>' +
+             '</figure>';
     });
     var points = join(cat.points, function (p) { return '<li>' + esc(p) + '</li>'; });
 
@@ -69,7 +75,10 @@
                '<span class="num-badge">' + esc(cat.no) + '</span>' +
                '<h3>' + esc(cat.title) + '</h3>' +
              '</header>' +
-             '<div class="cat__banner">' + art(cat.art) + '</div>' +
+             '<div class="cat__banner">' +
+               '<img src="' + MACHINES + cat.key + '.jpg" alt="' + esc(cat.title) +
+               '" loading="lazy" decoding="async">' +
+             '</div>' +
              '<div class="cat__items">' + items + '</div>' +
              '<ul class="cat__foot">' + points + '</ul>' +
            '</article>';
@@ -112,8 +121,6 @@
   }
 
   function qualityNote() { return esc(ns.quality.note); }
-  function qualityArt() { return art('quality'); }
-  function siteArt() { return art('site'); }
 
   /* Contact details are also written into href attributes ------------------ */
   function contactDetails() {
@@ -182,8 +189,6 @@
     fill('services', services());
     fill('quality-steps', qualitySteps());
     fill('quality-note', qualityNote());
-    fill('quality-art', qualityArt());
-    fill('site-art', siteArt());
     fill('contact-details', contactDetails());
     fill('footer-contact', footerContact());
     bindLinks();

@@ -15,15 +15,51 @@ css/
   sections.css          hero, trust bar, about, catalogue, why, services, quality, contact
   responsive.css        all breakpoints (loaded last so it overrides the rest)
 js/
-  icons.js              inline SVG icon set
-  illustrations.js      line-art machine scenes used as card / section artwork
+  icons.js              inline SVG icon set (UI icons only)
   data.js               ALL site content lives here
   render.js             builds the data-driven sections into [data-render] slots
   nav.js                mobile menu, sticky header, scroll-spy
   ui.js                 scroll reveal, back-to-top, enquiry form
   main.js               bootstrap
-asset/images/           logo (dark + light), favicon
+asset/images/
+  logo.png              logo rendered from the supplied Logo.pdf
+  logo-light.png        same logo recoloured for the dark footer
+  favicon.png           gear mark
+  machines/*.jpg        6 category banner photos
+  parts/*.jpg           54 product photos on white
+  about/*.jpg           hero collage, plant photos, inspection photo
+  source/catalogue.jpg  the printed catalogue artwork (master)
+tools/
+  extract_images.py     slices source/catalogue.jpg into the images above
 ```
+
+## Images
+
+Every photograph on the site is cut from the catalogue artwork in
+`asset/images/source/catalogue.jpg` by `tools/extract_images.py`. The script
+finds each product cell, strips the caption and the panel background, and
+writes a square white-background JPEG per part:
+
+```bash
+python tools/extract_images.py     # needs pillow + numpy
+```
+
+Coordinates are stored as fractions of the reference 1024x1536 poster, so if
+you replace the source with a **higher resolution export of the same layout**,
+re-running the script produces sharper images with no code changes. That is the
+single best upgrade available: the current tiles are limited by the source
+being 1024px wide.
+
+The one exception is `asset/images/about/quality.jpg` (the Quality Control
+section). It is a free stock photo from Pexels - a digital caliper measuring a
+steel section - used under the Pexels License (free for commercial use, no
+attribution required): https://www.pexels.com/photo/36003961/ . The extractor
+deliberately leaves that file alone, so re-running it will not overwrite it.
+
+To use a real photograph for one part instead, just overwrite its file — for
+example `asset/images/parts/cone-mantle.jpg` — keeping the name. Nothing in the
+code needs to change. Filenames follow `<category key>-<item img>.jpg` from
+`js/data.js`.
 
 ## Editing content
 
@@ -92,9 +128,9 @@ scripts, not ES modules.
 
 ## Notes
 
-- The logo in `asset/images/` is an SVG rebuild of the supplied artwork. If you
-  have the original vector file, replace `smdblogo.svg` (dark background version:
-  `smdblogo-light.svg`) keeping the same filenames.
-- Product artwork is drawn with SVG line art rather than photographs. Swapping in
-  real plant photos later only means replacing the `.cat__banner` contents in
-  `js/render.js`.
+- `logo.png` is rendered from the supplied `Logo.pdf` at high resolution;
+  `logo-light.png` is the same mark recoloured (navy to white) for the dark
+  footer. Regenerate them from a new PDF with pymupdf if the logo ever changes.
+- The Google Map is a keyless embed pointing at Ateli Mandi. Replace the
+  `iframe` `src` in `index.html` with the "Share > Embed a map" link from your
+  exact Google Business location for a precise pin.
