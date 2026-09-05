@@ -11,12 +11,16 @@
     if (!header || !toggle || !nav) { return; }
 
     var links = Array.prototype.slice.call(nav.querySelectorAll('.nav__link'));
+    var scrim = document.querySelector('[data-nav-scrim]');
 
     function setMenu(open) {
       nav.classList.toggle('is-open', open);
       toggle.setAttribute('aria-expanded', String(open));
       document.body.classList.toggle('is-locked', open);
+      if (scrim) { scrim.classList.toggle('is-visible', open); }
     }
+
+    if (scrim) { scrim.addEventListener('click', function () { setMenu(false); }); }
 
     toggle.addEventListener('click', function () {
       setMenu(toggle.getAttribute('aria-expanded') !== 'true');

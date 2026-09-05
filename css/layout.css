@@ -81,6 +81,14 @@
 /* The in-menu WhatsApp button belongs to the mobile drawer only */
 .nav > .btn { display: none; }
 
+.nav-scrim {
+  position: fixed; inset: 0; z-index: 99;
+  background: rgba(8, 26, 58, .5);
+  opacity: 0; visibility: hidden;
+  transition: opacity .25s var(--ease), visibility .25s;
+}
+.nav-scrim.is-visible { opacity: 1; visibility: visible; }
+
 .nav-toggle {
   display: none;
   width: 46px; height: 42px; border: 1px solid var(--line);
