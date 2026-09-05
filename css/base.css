@@ -1,6 +1,32 @@
 /* ==========================================================================
-   base.css — design tokens, reset, typography, utilities
+   base.css — web fonts, design tokens, reset, typography, utilities
    ========================================================================== */
+
+/* Self-hosted, subset to latin + punctuation by tools/build_fonts.py.
+   Inter is a variable font, so one file covers every weight we use.
+   font-display: swap keeps text visible while the font arrives. */
+@font-face {
+  font-family: "Inter";
+  src: url("../asset/fonts/inter-variable.woff2") format("woff2-variations"),
+       url("../asset/fonts/inter-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("../asset/fonts/barlow-condensed-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("../asset/fonts/barlow-condensed-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* Brand */

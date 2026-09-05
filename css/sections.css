@@ -206,3 +206,19 @@
   border: 1px solid var(--line); box-shadow: var(--shadow-sm); background: var(--surface-soft);
 }
 .map-frame iframe { display: block; width: 100%; height: 260px; border: 0; }
+
+/* Facade shown until the visitor asks for the map - loading Google's embed
+   up front costs more than the rest of the page put together. */
+.map-facade {
+  display: grid; place-items: center; gap: 10px;
+  min-height: 260px; padding: 24px; text-align: center;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(26, 79, 160, .10), transparent 60%),
+    repeating-linear-gradient(0deg, var(--surface-soft) 0 22px, #eef2f8 22px 23px),
+    repeating-linear-gradient(90deg, var(--surface-soft) 0 22px, #eef2f8 22px 23px);
+  color: var(--navy-700);
+}
+.map-facade svg { width: 34px; height: 34px; }
+.map-facade p { margin: 0; font-size: .95rem; color: var(--body); }
+.map-facade strong { color: var(--ink); }
+.map-facade__actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }

@@ -63,8 +63,8 @@
   function categoryCard(cat) {
     var items = join(cat.items, function (it) {
       return '<figure class="cat__item">' +
-               '<img src="' + PARTS + cat.key + '-' + it.img + '.jpg" alt="' + esc(it.name) +
-               '" loading="lazy" decoding="async" width="340" height="340">' +
+               '<img src="' + PARTS + cat.key + '-' + it.img + '.webp" alt="' + esc(it.name) +
+               '" loading="lazy" decoding="async" width="200" height="200">' +
                '<figcaption>' + esc(it.name) + '</figcaption>' +
              '</figure>';
     });
@@ -76,8 +76,8 @@
                '<h3>' + esc(cat.title) + '</h3>' +
              '</header>' +
              '<div class="cat__banner">' +
-               '<img src="' + MACHINES + cat.key + '.jpg" alt="' + esc(cat.title) +
-               '" loading="lazy" decoding="async">' +
+               '<img src="' + MACHINES + cat.key + '.webp" alt="' + esc(cat.title) +
+               '" loading="lazy" decoding="async" width="477" height="171">' +
              '</div>' +
              '<div class="cat__items">' + items + '</div>' +
              '<ul class="cat__foot">' + points + '</ul>' +

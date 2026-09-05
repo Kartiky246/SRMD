@@ -29,9 +29,60 @@ asset/images/
   parts/*.jpg           54 product photos on white
   about/*.jpg           hero collage, plant photos, inspection photo
   source/catalogue.jpg  the printed catalogue artwork (master)
+asset/fonts/            self-hosted subset webfonts (woff2)
 tools/
   extract_images.py     slices source/catalogue.jpg into the images above
+  build_brand.py        logo.svg / logo-light.svg / favicon.png from logo.pdf
+  build_fonts.py        downloads + subsets Inter and Barlow Condensed
 ```
+
+## Performance budget
+
+The whole page, cold, with every image and nothing cached:
+
+| | over the wire |
+|---|---|
+| HTML + CSS + JS + logos | 37 KB (gzipped by GitHub Pages) |
+| Fonts (2 families, subset) | 57 KB |
+| All 67 images (WebP) | 284 KB |
+| **Full page** | **~382 KB** |
+| First screen only | ~180 KB |
+
+Third-party requests: **zero**. Nothing is fetched from Google, a CDN, or an
+analytics host, so there is no extra DNS + TLS handshake before text can paint.
+
+Against the GitHub Pages soft limit of 100 GB/month that is roughly **270,000
+full page views a month** before bandwidth is a concern - and most visitors cost
+far less, because only the images they scroll to are downloaded. The repo is
+about 2 MB against a 1 GB limit. Neither limit is a practical risk.
+
+### Rules that keep it that way
+
+- **Images are WebP, sized for the box they are shown in.** The poster is only
+  1024px wide, so `extract_images.py` refuses to enlarge a crop past 1.5x its
+  native size - past that you pay bytes for detail that does not exist. If you
+  drop in your own photograph, save it as WebP no wider than ~1000px.
+- **Everything below the first screen is `loading="lazy"`.** A visitor who never
+  scrolls past the hero downloads 4 images, not 67.
+- **Fonts are self-hosted and subset** to latin + punctuation, and Inter ships
+  as one variable file covering every weight. `font-display: swap` means text
+  is never invisible while they load.
+- **The map is a facade.** Google's embed pulls well over a megabyte and sets
+  cookies; it is only loaded if the visitor presses "Show map".
+- Re-run `python tools/extract_images.py` after touching the source artwork, and
+  `tools/build_brand.py` / `tools/build_fonts.py` only if the logo or the font
+  choice changes.
+
+### Deliberately not done
+
+- **Bundling / minifying CSS and JS** - all of it gzips to 37 KB across 11 files
+  that HTTP/2 fetches in parallel. Bundling would save maybe 10 KB and cost the
+  modular structure that makes this site editable.
+- **A service worker** - GitHub Pages caps `Cache-Control` at 600s and that
+  cannot be changed, so a service worker is the only way to cache longer. Not
+  worth the stale-content failure mode for a site that changes rarely.
+- **AVIF** - another 15-20% off the images, but it needs a `<picture>` fallback
+  for older Safari, doubling the number of image files to maintain.
 
 ## Images
 

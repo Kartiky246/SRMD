@@ -63,7 +63,7 @@
 .brand__tag {
   display: none;
   padding-left: 12px; border-left: 1px solid var(--line);
-  font-family: var(--font-display); font-size: .82rem; line-height: 1.25;
+  font-family: var(--font-display); font-weight: 600; font-size: .82rem; line-height: 1.25;
   letter-spacing: .12em; text-transform: uppercase; color: var(--navy-700);
 }
 

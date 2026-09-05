@@ -40,6 +40,27 @@
     }, { passive: true });
   }
 
+  /* Map facade -------------------------------------------------------------
+     Google's embed pulls well over a megabyte of third party script and sets
+     cookies, so it is only fetched when the visitor asks for it. */
+  function mapFacade() {
+    var frame = document.querySelector('[data-map]');
+    if (!frame) { return; }
+    var btn = frame.querySelector('[data-map-load]');
+    if (!btn) { return; }
+
+    btn.addEventListener('click', function () {
+      var iframe = document.createElement('iframe');
+      iframe.title = 'SRMD India Solution location - Ateli Mandi, Haryana';
+      iframe.src = frame.getAttribute('data-map-src');
+      iframe.loading = 'lazy';
+      iframe.referrerPolicy = 'no-referrer-when-downgrade';
+      iframe.allowFullscreen = true;
+      frame.innerHTML = '';
+      frame.appendChild(iframe);
+    });
+  }
+
   /* Enquiry form ----------------------------------------------------------- */
   function enquiryForm() {
     var form = document.querySelector('[data-enquiry-form]');
@@ -101,6 +122,7 @@
   }
 
   ns.ui = function () {
+    mapFacade();
     productOptions();
     enquiryForm();
     backToTop();

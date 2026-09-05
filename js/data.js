@@ -65,8 +65,8 @@
   ];
 
   /* Product categories -----------------------------------------------------
-     Item images live at  asset/images/parts/<key>-<img>.jpg
-     Banner photos at     asset/images/machines/<key>.jpg
+     Item images live at  asset/images/parts/<key>-<img>.webp
+     Banner photos at     asset/images/machines/<key>.webp
      Both are cut from the printed catalogue by tools/extract_images.py    */
   ns.categories = [
     {

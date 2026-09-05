@@ -13,15 +13,15 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="SRMD India Solution | Crusher Spare Parts &amp; Equipment">
 <meta property="og:description" content="Perfect spare parts &amp; equipments for crusher plants. Quality tested, exact fit, pan India supply.">
-<meta property="og:image" content="asset/images/about/hero.jpg">
+<meta property="og:image" content="https://srmdindia.com/asset/images/about/hero.webp">
 <meta property="og:url" content="https://srmdindia.com/">
 
 <link rel="icon" href="asset/images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="asset/images/favicon.png">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="asset/images/about/hero.webp" as="image" fetchpriority="high">
+<link rel="preload" href="asset/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="asset/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
 
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/layout.css">
@@ -37,7 +37,7 @@
 <header class="header" data-header>
   <div class="container header__inner">
     <a class="brand" href="#top" aria-label="SRMD India Solution home">
-      <img src="asset/images/logo.png" alt="SRMD India Solution logo" width="1731" height="724" fetchpriority="high">
+      <img src="asset/images/logo.svg" alt="SRMD India Solution logo" width="420" height="176" fetchpriority="high">
       <span class="brand__tag">Quality &amp;<br>Trusted Solution</span>
     </a>
 
@@ -92,8 +92,8 @@
 
     <aside class="hero__panel">
       <figure class="hero__panel-figure">
-        <img src="asset/images/about/hero.jpg" alt="Crusher wear parts, bushes and liners supplied by SRMD India Solution"
-             width="1536" height="726" fetchpriority="high" decoding="async">
+        <img src="asset/images/about/hero.webp" alt="Crusher wear parts, bushes and liners supplied by SRMD India Solution"
+             width="1000" height="472" fetchpriority="high" decoding="async">
       </figure>
       <ul class="hero__panel-list">
         <li>
@@ -136,16 +136,16 @@
 
       <div class="about__media">
         <figure>
-          <img src="asset/images/about/hero.jpg" alt="Range of crusher spare parts supplied by SRMD India Solution"
-               width="1536" height="726" loading="lazy" decoding="async">
+          <img src="asset/images/about/hero.webp" alt="Range of crusher spare parts supplied by SRMD India Solution"
+               width="1000" height="472" loading="lazy" decoding="async">
         </figure>
         <figure>
-          <img src="asset/images/about/plant-1.jpg" alt="Stone crushing plant with feed conveyor"
-               width="612" height="354" loading="lazy" decoding="async">
+          <img src="asset/images/about/plant-1.webp" alt="Stone crushing plant with feed conveyor"
+               width="700" height="404" loading="lazy" decoding="async">
         </figure>
         <figure>
-          <img src="asset/images/about/plant-2.jpg" alt="Cone crusher installed at a working plant"
-               width="612" height="354" loading="lazy" decoding="async">
+          <img src="asset/images/about/plant-2.webp" alt="Cone crusher installed at a working plant"
+               width="700" height="404" loading="lazy" decoding="async">
         </figure>
       </div>
     </div>
@@ -232,8 +232,8 @@
         <p class="quality__note" data-render="quality-note"></p>
       </div>
       <figure class="quality__media reveal">
-        <img src="asset/images/about/quality.jpg" alt="Dimensional check of a steel component with a digital caliper"
-             width="1400" height="875" loading="lazy" decoding="async">
+        <img src="asset/images/about/quality.webp" alt="Dimensional check of a steel component with a digital caliper"
+             width="1000" height="625" loading="lazy" decoding="async">
       </figure>
     </div>
   </div>
@@ -268,11 +268,17 @@
     <div class="contact__grid">
       <div>
         <div class="contact__cards" data-render="contact-details"></div>
-        <div class="map-frame reveal">
-          <iframe
-            title="SRMD India Solution location - Ateli Mandi, Haryana"
-            src="https://www.google.com/maps?q=Ateli%20Mandi%2C%20Haryana%20123021&output=embed"
-            loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <div class="map-frame reveal" data-map
+             data-map-src="https://www.google.com/maps?q=Ateli%20Mandi%2C%20Haryana%20123021&output=embed">
+          <div class="map-facade">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+            <p><strong>Ateli Mandi - 123021</strong><br>Haryana, India</p>
+            <div class="map-facade__actions">
+              <button class="btn btn--sm" type="button" data-map-load>Show map</button>
+              <a class="btn btn--sm btn--ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=Ateli+Mandi+Haryana+123021"
+                 target="_blank" rel="noopener">Get directions</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -325,7 +331,7 @@
   <div class="container">
     <div class="footer__grid">
       <div>
-        <img class="footer__logo" src="asset/images/logo-light.png" alt="SRMD India Solution" width="1731" height="724" loading="lazy">
+        <img class="footer__logo" src="asset/images/logo-light.svg" alt="SRMD India Solution" width="420" height="176" loading="lazy">
         <p>Perfect spare parts &amp; equipments for crusher plants. Quality, reliable and cost-effective solutions for stone crushing and mineral processing industries.</p>
         <span class="chip chip--glass" style="margin-top:12px">Quality &amp; Trusted Solution</span>
       </div>

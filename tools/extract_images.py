@@ -6,9 +6,13 @@ Source : asset/images/source/catalogue.jpg  (the catalogue poster)
 NOTE   : asset/images/about/quality.jpg is NOT produced here - it is a free
          Pexels photo (see README), so this script leaves it alone.
 
-Output : asset/images/machines/*.jpg   category banner photos
-         asset/images/parts/*.jpg      54 product tiles (white background)
-         asset/images/about/*.jpg      plant photos + hero collage
+Output : asset/images/machines/*.webp  category banner photos
+         asset/images/parts/*.webp     54 product tiles (white background)
+         asset/images/about/*.webp     plant photos + hero collage
+
+Everything is written as WebP, sized for the largest box it is displayed in on
+a 2x screen - shipping a 1536px photo into a 400px slot was the single most
+expensive thing on the page.
 
 Re-run it after replacing the source with a higher resolution export:
 
@@ -78,8 +82,25 @@ PHOTOS = {
 
 INSET = 7             # px trimmed off each cell edge (borders / separators)
 PAD = 6               # white padding kept around an autocropped part
-TILE = 340            # output tile size in px
-UPSCALE = 3           # banner / photo upscale factor
+TILE = 200            # tile output size (~108 CSS px on a phone)
+BANNER_W = 520        # card banner width
+WEBP_Q = 80           # quality for the part tiles
+PHOTO_Q = 78          # quality for the large photographs
+
+# The poster is only 1024px wide, so a crop has a hard limit on real detail.
+# Enlarging past this multiple of the native crop invents nothing and costs a
+# lot of bytes - the hero was 90 KB at 2x and is 64 KB at 1.5x, indistinguishable.
+MAX_UPSCALE = 1.5
+
+# Longest edge each stand-alone photo is ever displayed at, doubled for 2x
+# screens. Anything larger is wasted bytes.
+PHOTO_W = {
+    "about/hero": 760,
+    "about/plant-1": 330,
+    "about/plant-2": 330,
+    "about/plant-3": 330,
+    "machines/plant": BANNER_W,
+}
 
 
 def scaled(box, w, h):
@@ -87,17 +108,25 @@ def scaled(box, w, h):
     return (int(box[0] * sx), int(box[1] * sy), int(box[2] * sx), int(box[3] * sy))
 
 
+def resize_to_width(img, width):
+    """Scale to an output width, never enlarging past MAX_UPSCALE of native."""
+    width = min(width, int(img.width * MAX_UPSCALE))
+    if img.width == width:
+        return img
+    h = max(1, int(round(img.height * width / float(img.width))))
+    return img.resize((width, h), Image.LANCZOS)
+
+
 def sharpen(img):
-    return img.filter(ImageFilter.UnsharpMask(radius=1.6, percent=110, threshold=3))
+    """Light touch: heavy sharpening adds high-frequency noise that WebP then
+    has to spend real bytes encoding (26 KB on the hero image alone)."""
+    return img.filter(ImageFilter.UnsharpMask(radius=1.2, percent=70, threshold=3))
 
 
-def save(img, rel, quality=88):
+def save(img, rel, quality=PHOTO_Q):
     path = os.path.join(ROOT, "asset", "images", rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    if path.endswith(".png"):
-        img.save(path, optimize=True)
-    else:
-        img.convert("RGB").save(path, quality=quality, optimize=True, progressive=True)
+    img.convert("RGB").save(path, format="WEBP", quality=quality, method=6)
     return path
 
 
@@ -190,7 +219,9 @@ def photo_region(cell):
 def make_tile(cell):
     """Product photo on a clean square white canvas."""
     art = whiten_background(autocrop_white(photo_region(trim_edge_lines(cell))))
-    scale = min((TILE - 2 * PAD * 4) / art.width, (TILE - 2 * PAD * 4) / art.height)
+    # Tiles always fill their canvas: they are laid out side by side, so a
+    # part that stopped short of the edge would look smaller than its neighbours.
+    scale = min((TILE - 2 * PAD * 2) / art.width, (TILE - 2 * PAD * 2) / art.height)
     art = art.resize((max(1, int(art.width * scale)), max(1, int(art.height * scale))), Image.LANCZOS)
     art = sharpen(art)
     canvas = Image.new("RGB", (TILE, TILE), "white")
@@ -209,10 +240,9 @@ def main():
             continue
         x0, x1 = COLS[col]
         y0, y1 = row["banner"]
-        box = scaled((x0, y0, x1, y1), W, H)
-        crop = im.crop(box)
-        crop = crop.resize((crop.width * UPSCALE, crop.height * UPSCALE), Image.LANCZOS)
-        written.append(save(sharpen(crop), "machines/%s.jpg" % key))
+        crop = im.crop(scaled((x0, y0, x1, y1), W, H))
+        crop = resize_to_width(crop, BANNER_W)
+        written.append(save(sharpen(crop), "machines/%s.webp" % key))
 
     # Product tiles ---------------------------------------------------------
     for key, col, row, names in PANELS:
@@ -225,13 +255,13 @@ def main():
             cx0 = x0 + c * cw
             cy0 = y0 + r * ch
             box = scaled((cx0 + INSET, cy0 + 2, cx0 + cw - INSET, cy0 + ch - 2), W, H)
-            written.append(save(make_tile(im.crop(box)), "parts/%s-%s.jpg" % (key, name), quality=84))
+            written.append(save(make_tile(im.crop(box)), "parts/%s-%s.webp" % (key, name), quality=WEBP_Q))
 
     # Stand-alone photos ----------------------------------------------------
     for rel, box in PHOTOS.items():
         crop = im.crop(scaled(box, W, H))
-        crop = crop.resize((crop.width * UPSCALE, crop.height * UPSCALE), Image.LANCZOS)
-        written.append(save(sharpen(crop), rel + ".jpg"))
+        crop = resize_to_width(crop, PHOTO_W.get(rel, 800))
+        written.append(save(sharpen(crop), rel + ".webp"))
 
     print("wrote %d files" % len(written))
     for p in written[:5]:
