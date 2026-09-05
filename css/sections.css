@@ -142,6 +142,10 @@
 /* Products --------------------------------------------------------------- */
 .cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 
+/* Only meaningful while the categories collapse (phones) */
+.cats-tools { display: none; justify-content: center; margin-bottom: 18px; }
+.js-accordion .cats-tools { display: flex; }
+
 /* Why choose ------------------------------------------------------------- */
 .why { position: relative; }
 .why__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }

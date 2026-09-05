@@ -13,6 +13,7 @@
       if (window.console) { console.error('SRMD render failed:', err); }
     }
     ns.nav();
+    ns.accordion();
     ns.ui();
     document.documentElement.classList.add('is-ready');
   }

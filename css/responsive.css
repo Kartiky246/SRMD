@@ -41,6 +41,20 @@
   .header__cta .btn--call { display: inline-flex; }
 
   .hero__inner { grid-template-columns: 1fr; }
+
+  /* Product categories collapse to their title bar (see js/accordion.js).
+     Gated on .js-accordion so they stay open when JavaScript is unavailable. */
+  .cat__toggle { cursor: pointer; }
+  .cat__chev { display: block; transition: transform .25s var(--ease); }
+  .js-accordion .cat__count { display: inline-flex; }
+  /* keep the bar on one line: badge + title + count + chevron is a tight fit */
+  .cat__toggle { gap: 10px; padding: 14px 16px; }
+  .cat__title { font-size: 1.06rem; }
+  .num-badge { width: 34px; height: 34px; font-size: 1rem; }
+  .cat.is-open .cat__chev { transform: rotate(180deg); }
+  .js-accordion .cat { transform: none; }
+  .js-accordion .cat:hover { transform: none; box-shadow: var(--shadow-sm); }
+  .js-accordion .cats { gap: 12px; }
   .grid--sidebar,
   .quality__grid,
   .contact__grid { grid-template-columns: 1fr; }
@@ -117,7 +131,8 @@
   .btn--call span { display: none; }
   .btn--call { padding: 11px 13px; }
   .hero__tagline { letter-spacing: .14em; font-size: .82rem; }
-  .cat__head h3 { font-size: 1.05rem; }
+  .cat__title { font-size: .98rem; }
+  .cat__count { padding: 3px 9px; font-size: .75rem; }
   .section-head p { font-size: .93rem; }
 }
 

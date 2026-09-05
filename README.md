@@ -19,6 +19,7 @@ js/
   data.js               ALL site content lives here
   render.js             builds the data-driven sections into [data-render] slots
   nav.js                mobile menu, sticky header, scroll-spy
+  accordion.js          collapses the product categories on phones
   ui.js                 scroll reveal, back-to-top, enquiry form
   main.js               bootstrap
 asset/images/
@@ -111,6 +112,24 @@ To use a real photograph for one part instead, just overwrite its file — for
 example `asset/images/parts/cone-mantle.jpg` — keeping the name. Nothing in the
 code needs to change. Filenames follow `<category key>-<item img>.jpg` from
 `js/data.js`.
+
+## Mobile catalogue
+
+Fully expanded, the six product categories are about nine phone screens of
+scrolling - roughly 40% of the page. Below 900px each category collapses to its
+title bar and opens on tap (`js/accordion.js`); the first one starts open so the
+section still shows products. Desktop is unchanged: every card stays expanded
+and the title bars are inert.
+
+That takes the page from 23.6 phone screens to 17.3, and a phone now fetches 5
+images on load instead of 67 - a collapsed panel never requests its pictures.
+The markup is identical either way, so search engines still index all 54
+products. Note that a browser's own "find in page" does NOT match text inside a
+collapsed panel - that is a genuine trade-off of hiding content. Collapsing is switched on by a `js-accordion` class that
+JavaScript adds, so with scripting unavailable every card renders open.
+
+Links to a category (the catalogue index, the footer product list, or a
+`#cat-cone` URL) open that card before scrolling to it.
 
 ## Editing content
 

@@ -71,16 +71,24 @@
     var points = join(cat.points, function (p) { return '<li>' + esc(p) + '</li>'; });
 
     return '<article class="cat reveal" id="' + esc(cat.id) + '">' +
-             '<header class="cat__head">' +
-               '<span class="num-badge">' + esc(cat.no) + '</span>' +
-               '<h3>' + esc(cat.title) + '</h3>' +
-             '</header>' +
-             '<div class="cat__banner">' +
-               '<img src="' + MACHINES + cat.key + '.webp" alt="' + esc(cat.title) +
-               '" loading="lazy" decoding="async" width="477" height="171">' +
+             '<h3 class="cat__head">' +
+               '<button class="cat__toggle" type="button" aria-controls="' + esc(cat.id) + '-panel">' +
+                 '<span class="num-badge">' + esc(cat.no) + '</span>' +
+                 '<span class="cat__title">' + esc(cat.title) + '</span>' +
+                 '<span class="cat__count">' + cat.items.length + ' parts</span>' +
+                 '<svg class="cat__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+                 'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                 '<path d="M6 9l6 6 6-6"/></svg>' +
+               '</button>' +
+             '</h3>' +
+             '<div class="cat__panel" id="' + esc(cat.id) + '-panel">' +
+               '<div class="cat__banner">' +
+                 '<img src="' + MACHINES + cat.key + '.webp" alt="' + esc(cat.title) +
+                 '" loading="lazy" decoding="async" width="477" height="171">' +
+               '</div>' +
+               '<div class="cat__items">' + items + '</div>' +
+               '<ul class="cat__foot">' + points + '</ul>' +
              '</div>' +
-             '<div class="cat__items">' + items + '</div>' +
-             '<ul class="cat__foot">' + points + '</ul>' +
            '</article>';
   }
 
