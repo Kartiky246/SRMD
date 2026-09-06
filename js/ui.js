@@ -42,14 +42,20 @@
 
   /* Map facade -------------------------------------------------------------
      Google's embed pulls well over a megabyte of third party script and sets
-     cookies, so it is only fetched when the visitor asks for it. */
+     cookies. On desktop it loads on its own once the contact section comes
+     into view, so nobody has to press a button; on phones it is never built at
+     all and responsive.css leaves only the "Get directions" link. */
+  var MAP_DESKTOP = '(min-width: 901px)';
+
   function mapFacade() {
     var frame = document.querySelector('[data-map]');
     if (!frame) { return; }
-    var btn = frame.querySelector('[data-map-load]');
-    if (!btn) { return; }
 
-    btn.addEventListener('click', function () {
+    var loaded = false;
+
+    function load() {
+      if (loaded) { return; }
+      loaded = true;
       var iframe = document.createElement('iframe');
       iframe.title = 'SRMD India Solution location - Ateli Mandi, Haryana';
       iframe.src = frame.getAttribute('data-map-src');
@@ -58,7 +64,32 @@
       iframe.allowFullscreen = true;
       frame.innerHTML = '';
       frame.appendChild(iframe);
-    });
+    }
+
+    var btn = frame.querySelector('[data-map-load]');
+    if (btn) { btn.addEventListener('click', load); }
+
+    var mq = window.matchMedia(MAP_DESKTOP);
+    var io = null;
+
+    function apply() {
+      if (!mq.matches || loaded) { return; }
+      /* Wait until the visitor is heading for the contact section rather than
+         spending the request during the initial page load. */
+      if (!('IntersectionObserver' in window)) { load(); return; }
+      if (io) { return; }
+      io = new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) {
+          io.disconnect();
+          load();
+        }
+      }, { rootMargin: '400px 0px' });
+      io.observe(frame);
+    }
+
+    if (mq.addEventListener) { mq.addEventListener('change', apply); }
+    else if (mq.addListener) { mq.addListener(apply); }
+    apply();
   }
 
   /* Enquiry form ----------------------------------------------------------- */

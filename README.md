@@ -69,7 +69,12 @@ about 2 MB against a 1 GB limit. Neither limit is a practical risk.
   as one variable file covering every weight. `font-display: swap` means text
   is never invisible while they load.
 - **The map is a facade.** Google's embed pulls well over a megabyte and sets
-  cookies; it is only loaded if the visitor presses "Show map".
+  cookies, so it is never part of the initial load. On desktop `js/ui.js`
+  fetches it on its own once the contact section is within 400px of the
+  viewport - nobody has to press a button. Below 900px it is never built at
+  all: a phone already has a maps app, so that column collapses to a single
+  "Get directions" link. The "Show map" button remains as the fallback for
+  browsers without `IntersectionObserver`.
 - Re-run `python tools/extract_images.py` after touching the source artwork, and
   `tools/build_brand.py` / `tools/build_fonts.py` only if the logo or the font
   choice changes.
@@ -102,11 +107,20 @@ re-running the script produces sharper images with no code changes. That is the
 single best upgrade available: the current tiles are limited by the source
 being 1024px wide.
 
-The one exception is `asset/images/about/quality.jpg` (the Quality Control
-section). It is a free stock photo from Pexels - a digital caliper measuring a
-steel section - used under the Pexels License (free for commercial use, no
-attribution required): https://www.pexels.com/photo/36003961/ . The extractor
+The one exception is `asset/images/about/quality.webp` (the Quality Control
+section), which does not come from the poster at all. The extractor
 deliberately leaves that file alone, so re-running it will not overwrite it.
+To replace it, encode the new photo with the same settings the extractor uses
+for its large photographs - 1000px wide, WebP quality 78, `method=6` - which
+covers the ~548px slot on a 2x screen:
+
+    python -c "from PIL import Image; im=Image.open('new.png').convert('RGB'); \
+      w=1000; im.resize((w, round(im.height*w/im.width)), Image.LANCZOS) \
+      .save('asset/images/about/quality.webp', format='WEBP', quality=78, method=6)"
+
+Then update the `width`/`height` attributes on that `img` in `index.html` to the
+new pixel size, so the browser still reserves the right box and nothing shifts
+while it loads.
 
 To use a real photograph for one part instead, just overwrite its file — for
 example `asset/images/parts/cone-mantle.jpg` — keeping the name. Nothing in the
@@ -121,12 +135,20 @@ title bar and opens on tap (`js/accordion.js`); the first one starts open so the
 section still shows products. Desktop is unchanged: every card stays expanded
 and the title bars are inert.
 
-That takes the page from 23.6 phone screens to 17.3, and a phone now fetches 5
-images on load instead of 67 - a collapsed panel never requests its pictures.
-The markup is identical either way, so search engines still index all 54
-products. Note that a browser's own "find in page" does NOT match text inside a
-collapsed panel - that is a genuine trade-off of hiding content. Collapsing is switched on by a `js-accordion` class that
-JavaScript adds, so with scripting unavailable every card renders open.
+A collapsed card keeps its machine photo. The `.cat__banner` sits outside
+`.cat__panel` precisely so it survives collapsing - a catalogue of six bare navy
+bars reads as a broken page, and the photo is what tells someone whether they
+are looking at a jaw or a cone. Only the parts grid and the bullet list hide.
+
+That takes the page from 23.6 phone screens to 18.0, and scrolling the whole
+collapsed catalogue pulls 15 of the section's 60 images - the six category
+photos plus the nine parts in the open card. The markup is identical either
+way, so
+search engines still index all 54 products. Note that a browser's own "find in
+page" does NOT match text inside a collapsed panel - that is a genuine
+trade-off of hiding content. Collapsing is switched on by a `js-accordion`
+class that JavaScript adds, so with scripting unavailable every card renders
+open.
 
 Links to a category (the catalogue index, the footer product list, or a
 `#cat-cone` URL) open that card before scrolling to it.
@@ -202,6 +224,6 @@ scripts, not ES modules.
 - `logo.png` is rendered from the supplied `Logo.pdf` at high resolution;
   `logo-light.png` is the same mark recoloured (navy to white) for the dark
   footer. Regenerate them from a new PDF with pymupdf if the logo ever changes.
-- The Google Map is a keyless embed pointing at Ateli Mandi. Replace the
-  `iframe` `src` in `index.html` with the "Share > Embed a map" link from your
-  exact Google Business location for a precise pin.
+- The Google Map is a keyless embed pointing at Ateli Mandi. Replace
+  `data-map-src` on `.map-frame` in `index.html` with the "Share > Embed a map"
+  link from your exact Google Business location for a precise pin.

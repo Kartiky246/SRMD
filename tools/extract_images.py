@@ -3,8 +3,8 @@ extract_images.py — slices the printed catalogue artwork into the individual
 images used by the website.
 
 Source : asset/images/source/catalogue.jpg  (the catalogue poster)
-NOTE   : asset/images/about/quality.jpg is NOT produced here - it is a free
-         Pexels photo (see README), so this script leaves it alone.
+NOTE   : asset/images/about/quality.webp is NOT produced here - it does not come
+         from the poster (see README), so this script leaves it alone.
 
 Output : asset/images/machines/*.webp  category banner photos
          asset/images/parts/*.webp     54 product tiles (white background)

@@ -55,6 +55,19 @@
   .js-accordion .cat { transform: none; }
   .js-accordion .cat:hover { transform: none; box-shadow: var(--shadow-sm); }
   .js-accordion .cats { gap: 12px; }
+  /* A collapsed card ends at its banner, so drop the divider under it. */
+  .js-accordion .cat:not(.is-open) .cat__banner { border-bottom: 0; }
+
+  /* The Google embed is over a megabyte of third party script, and a phone
+     already has a maps app - so no map here, just the link out to it.
+     js/ui.js never builds the iframe at this width either. */
+  .map-frame { border: 0; box-shadow: none; background: none; }
+  .map-facade { min-height: 0; padding: 0; gap: 0; background: none; }
+  .map-facade > svg,
+  .map-facade p,
+  [data-map-load] { display: none; }
+  .map-facade__actions { display: block; }
+  .map-facade__actions .btn { width: 100%; }
   .grid--sidebar,
   .quality__grid,
   .contact__grid { grid-template-columns: 1fr; }

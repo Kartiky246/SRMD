@@ -56,12 +56,9 @@
     { no: '04', label: 'Vibrating Screen Parts',       href: '#cat-screen' },
     { no: '05', label: 'Conveyor System',              href: '#cat-conveyor' },
     { no: '06', label: 'Crusher Plant Equipment',      href: '#cat-plant' },
-    { no: '07', label: 'Wear Parts',                   href: '#more-categories' },
-    { no: '08', label: 'Hydraulic & Lubrication Parts', href: '#more-categories' },
-    { no: '09', label: 'Fasteners & Consumables',      href: '#more-categories' },
-    { no: '10', label: 'Our Services',                 href: '#services' },
-    { no: '11', label: 'Quality Control',              href: '#quality' },
-    { no: '12', label: 'Contact Us',                   href: '#contact' }
+    { no: '07', label: 'Our Services',                 href: '#services' },
+    { no: '08', label: 'Quality Control',              href: '#quality' },
+    { no: '09', label: 'Contact Us',                   href: '#contact' }
   ];
 
   /* Product categories -----------------------------------------------------
@@ -162,11 +159,7 @@
   ];
 
   /* Further catalogue sections (listed in the printed index) --------------- */
-  ns.moreCategories = [
-    { no: '07', icon: 'wear',  title: 'Wear Parts',                    text: 'Liners, wear plates and high-impact wear components' },
-    { no: '08', icon: 'hydraulic', title: 'Hydraulic & Lubrication Parts', text: 'Power packs, cylinders, pumps, hoses and lube units' },
-    { no: '09', icon: 'bolt',  title: 'Fasteners & Consumables',       title_alt: '', text: 'Bolts, nuts, springs, seals and plant consumables' }
-  ];
+  ns.moreCategories = [];
 
   /* Why choose us --------------------------------------------------------- */
   ns.why = [

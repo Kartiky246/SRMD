@@ -116,6 +116,9 @@
   border: 1px solid rgba(255, 255, 255, .2);
   font-size: .78rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap;
 }
+/* The panel is the card's growing child, so .cat__foot can still use
+   margin-top:auto to sit flush with the bottom of the tallest card in a row. */
+.cat__panel { display: flex; flex-direction: column; flex: 1; }
 .cat__panel[hidden] { display: none; }
 .cat__chev { display: none; width: 22px; height: 22px; margin-left: 12px; flex: none; }
 .cat__banner {

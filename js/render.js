@@ -81,11 +81,13 @@
                  '<path d="M6 9l6 6 6-6"/></svg>' +
                '</button>' +
              '</h3>' +
+             /* The banner sits outside the panel so a collapsed category still
+                shows its machine, instead of collapsing to a bare title bar. */
+             '<div class="cat__banner">' +
+               '<img src="' + MACHINES + cat.key + '.webp" alt="' + esc(cat.title) +
+               '" loading="lazy" decoding="async" width="477" height="171">' +
+             '</div>' +
              '<div class="cat__panel" id="' + esc(cat.id) + '-panel">' +
-               '<div class="cat__banner">' +
-                 '<img src="' + MACHINES + cat.key + '.webp" alt="' + esc(cat.title) +
-                 '" loading="lazy" decoding="async" width="477" height="171">' +
-               '</div>' +
                '<div class="cat__items">' + items + '</div>' +
                '<ul class="cat__foot">' + points + '</ul>' +
              '</div>' +
