@@ -8,13 +8,17 @@
   ns.company = {
     name: 'SRMD India Solution',
     tagline: 'Quality & Trusted Solution',
-    address: 'Power House, Ateli Mandi - 123021, Haryana, India',
-    phones: ['94675 44433', '85058 88809'],
+    address: 'Ateli Mandi - 123021, Haryana, India',
+    /* Cities we supply from / operate in. Shown in place of a single postal
+       address, because customers care which of their sites we can reach. */
+    locations: ['New Delhi', 'Jaipur', 'Lucknow', 'Bhopal', 'Gwalior', 'Dehradun'],
+    /* First number is the primary one: it fills the header button, the tel:
+       links and the JSON-LD, and it is the number registered on WhatsApp, so
+       calls and chats both land in the same place. */
+    phones: ['85058 88809', '94675 44433'],
     email: 'srmdindia@gmail.com',
     website: 'srmdindia.com',
-    /* Country code + number, digits only. This must be a number that is
-       actually registered on WhatsApp - 94675 44433 is not, so chats open on
-       85058 88809. Calls still go to the first number in `phones`. */
+    /* Country code + number, digits only - matches phones[0]. */
     whatsapp: '918505888809',
     hours: 'Mon - Sat, 9:00 AM - 7:00 PM'
   };

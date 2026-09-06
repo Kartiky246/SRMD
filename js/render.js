@@ -143,7 +143,7 @@
     return '' +
       '<div class="card contact-card reveal">' +
         '<span class="icon-badge">' + icon('pin') + '</span>' +
-        '<div><h3>Address</h3><p>' + esc(c.address) + '</p></div>' +
+        '<div><h3>Locations</h3><p>' + c.locations.map(esc).join(', ') + '</p></div>' +
       '</div>' +
       '<div class="card contact-card reveal">' +
         '<span class="icon-badge icon-badge--green">' + icon('phone') + '</span>' +
@@ -164,7 +164,7 @@
     var phones = join(c.phones, function (p) {
       return '<li><a href="tel:+91' + p.replace(/\s/g, '') + '">+91 ' + esc(p) + '</a></li>';
     });
-    return '<li>' + esc(c.address) + '</li>' + phones +
+    return '<li>' + c.locations.map(esc).join(' &middot; ') + '</li>' + phones +
            '<li><a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></li>';
   }
 

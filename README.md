@@ -68,13 +68,9 @@ about 2 MB against a 1 GB limit. Neither limit is a practical risk.
 - **Fonts are self-hosted and subset** to latin + punctuation, and Inter ships
   as one variable file covering every weight. `font-display: swap` means text
   is never invisible while they load.
-- **The map is a facade.** Google's embed pulls well over a megabyte and sets
-  cookies, so it is never part of the initial load. On desktop `js/ui.js`
-  fetches it on its own once the contact section is within 400px of the
-  viewport - nobody has to press a button. Below 900px it is never built at
-  all: a phone already has a maps app, so that column collapses to a single
-  "Get directions" link. The "Show map" button remains as the fallback for
-  browsers without `IntersectionObserver`.
+- **No embedded map.** Google's embed pulls well over a megabyte and sets
+  cookies. The contact column lists the cities we operate in instead, which is
+  what a plant buyer actually wants to know, and costs nothing.
 - Re-run `python tools/extract_images.py` after touching the source artwork, and
   `tools/build_brand.py` / `tools/build_fonts.py` only if the logo or the font
   choice changes.
@@ -254,6 +250,7 @@ scripts, not ES modules.
 - `logo.png` is rendered from the supplied `Logo.pdf` at high resolution;
   `logo-light.png` is the same mark recoloured (navy to white) for the dark
   footer. Regenerate them from a new PDF with pymupdf if the logo ever changes.
-- The Google Map is a keyless embed pointing at Ateli Mandi. Replace
-  `data-map-src` on `.map-frame` in `index.html` with the "Share > Embed a map"
-  link from your exact Google Business location for a precise pin.
+- Contact details, the city list and both phone numbers all come from
+  `ns.company` in `js/data.js`. `phones[0]` is the primary number: it fills the
+  header button, every `tel:` link and the JSON-LD, and it must be the number
+  registered on WhatsApp so calls and chats land in the same place.
