@@ -54,7 +54,10 @@
   .cat.is-open .cat__chev { transform: rotate(180deg); }
   .js-accordion .cat { transform: none; }
   .js-accordion .cat:hover { transform: none; box-shadow: var(--shadow-sm); }
-  .js-accordion .cats { gap: 12px; }
+  /* 12px was right when a collapsed card was a bare title bar; now that each
+     one keeps its banner it is a 229px photo block, and that gap made the six
+     of them read as one continuous ribbon. Matches the .cats-tools spacing. */
+  .js-accordion .cats { gap: 18px; }
   /* A collapsed card ends at its banner, so drop the divider under it. */
   .js-accordion .cat:not(.is-open) .cat__banner { border-bottom: 0; }
 
