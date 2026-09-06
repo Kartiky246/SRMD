@@ -48,14 +48,14 @@ The whole page, cold, with every image and nothing cached:
 |---|---|
 | HTML + CSS + JS + logos | 37 KB (gzipped by GitHub Pages) |
 | Fonts (3 families, subset) | 60 KB |
-| All 66 images (WebP) | 615 KB |
-| **Full page** | **~715 KB** |
+| All 66 images (WebP) | 663 KB |
+| **Full page** | **~760 KB** |
 | First screen only | ~198 KB |
 
 Third-party requests: **zero**. Nothing is fetched from Google, a CDN, or an
 analytics host, so there is no extra DNS + TLS handshake before text can paint.
 
-Against the GitHub Pages soft limit of 100 GB/month that is roughly **170,000
+Against the GitHub Pages soft limit of 100 GB/month that is roughly **135,000
 full page views a month** before bandwidth is a concern - and most visitors cost
 far less, because only the images they scroll to are downloaded. The repo is
 about 2 MB against a 1 GB limit. Neither limit is a practical risk.
@@ -122,6 +122,8 @@ image back to the poster.
 | --- | --- | --- | --- | --- |
 | `about/hero.webp` | hero panel | 475px | 860px, quality 72 | 72 KB |
 | `about/parts-range.webp` | About collage | 858px | 940px, quality 74 | 87 KB |
+| `about/plant-1.webp` | About collage | 566px | 620px, quality 76 | 36 KB |
+| `about/plant-2.webp` | About collage | 566px | 620px, quality 76 | 31 KB |
 | `about/quality.webp` | Quality Control | 548px | 1000px, quality 78 | 33 KB |
 | `machines/jaw.webp` | category banner | 686px | 740px, quality 76 | 30 KB |
 | `machines/cone.webp` | category banner | 686px | 740px, quality 76 | 32 KB |

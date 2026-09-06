@@ -86,6 +86,8 @@ PHOTOS = {
 SUPPLIED = {
     "about/hero.webp",
     "about/parts-range.webp",
+    "about/plant-1.webp",
+    "about/plant-2.webp",
     "about/quality.webp",
     "machines/jaw.webp",
     "machines/cone.webp",
