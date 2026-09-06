@@ -95,6 +95,19 @@ SUPPLIED = {
     "machines/plant.webp",
 }
 
+# All 54 product tiles are supplied photographs too, built from the studio
+# shots by tools/import_product_photos.py. They are added to SUPPLIED the
+# same way, so the guard in save() covers them as well; name a tile here to
+# hand that one back to its poster crop.
+POSTER_PARTS = set()
+
+SUPPLIED |= {
+    "parts/%s-%s.webp" % (key, name)
+    for key, _col, _row, names in PANELS
+    for name in names
+    if "%s-%s" % (key, name) not in POSTER_PARTS
+}
+
 INSET = 7             # px trimmed off each cell edge (borders / separators)
 PAD = 6               # white padding kept around an autocropped part
 TILE = 200            # tile output size (~108 CSS px on a phone)

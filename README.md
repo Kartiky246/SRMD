@@ -35,6 +35,7 @@ asset/fonts/            self-hosted subset webfonts (woff2)
                         Orbitron = the company name (matches the visiting card)
 tools/
   extract_images.py     slices source/catalogue.jpg into the images above
+  import_product_photos.py  builds the 54 part tiles from supplied photos
   build_brand.py        logo.svg / logo-light.svg / favicon.png from logo.pdf
   build_fonts.py        downloads + subsets Inter, Barlow Condensed, Orbitron
 ```
@@ -47,8 +48,8 @@ The whole page, cold, with every image and nothing cached:
 |---|---|
 | HTML + CSS + JS + logos | 37 KB (gzipped by GitHub Pages) |
 | Fonts (3 families, subset) | 60 KB |
-| All 66 images (WebP) | 503 KB |
-| **Full page** | **~600 KB** |
+| All 66 images (WebP) | 615 KB |
+| **Full page** | **~715 KB** |
 | First screen only | ~198 KB |
 
 Third-party requests: **zero**. Nothing is fetched from Google, a CDN, or an
@@ -91,10 +92,10 @@ about 2 MB against a 1 GB limit. Neither limit is a practical risk.
 
 ## Images
 
-Every photograph on the site is cut from the catalogue artwork in
-`asset/images/source/catalogue.jpg` by `tools/extract_images.py`. The script
-finds each product cell, strips the caption and the panel background, and
-writes a square white-background JPEG per part:
+The category banners and the About plant photos are cut from the catalogue
+artwork in `asset/images/source/catalogue.jpg` by `tools/extract_images.py`.
+The script finds each cell, strips the caption and the panel background, and
+writes a square white-background WebP per part:
 
 ```bash
 python tools/extract_images.py     # needs pillow + numpy
@@ -102,17 +103,20 @@ python tools/extract_images.py     # needs pillow + numpy
 
 Coordinates are stored as fractions of the reference 1024x1536 poster, so if
 you replace the source with a **higher resolution export of the same layout**,
-re-running the script produces sharper images with no code changes. That is the
-single best upgrade available: the current tiles are limited by the source
-being 1024px wide.
+re-running the script produces sharper crops with no code changes.
+
+The 54 product tiles no longer come from the poster at all - they are real
+studio photographs, see below. The extractor still knows how to cut them, so
+the geometry stays under test, but `save()` refuses to write over them.
 
 ## Supplied photographs
 
-All nine of the site's large photographs are real pictures rather than poster
-crops. They are listed in `SUPPLIED` at the top of `tools/extract_images.py`,
-and `save()` refuses to
+Every photograph on the site is now a real picture rather than a poster
+crop - the nine large ones below, plus all 54 product tiles. They are listed
+in `SUPPLIED` at the top of `tools/extract_images.py`, and `save()` refuses to
 write anything in that set, so re-running the extractor can never overwrite
-them. Drop a name from the set to hand that image back to the poster.
+them. Drop a name from the set (or add a tile to `POSTER_PARTS`) to hand that
+image back to the poster.
 
 | file | where | widest slot | encoded at | size |
 | --- | --- | --- | --- | --- |
@@ -151,10 +155,44 @@ For the stand-alone photographs in `index.html`, also update the `width`/
 reserves the right box and nothing shifts while it loads. The category banners
 do not need this - `.cat__banner` fixes the ratio in CSS.
 
-To use a real photograph for one part instead, just overwrite its file — for
-example `asset/images/parts/cone-mantle.jpg` — keeping the name. Nothing in the
-code needs to change. Filenames follow `<category key>-<item img>.jpg` from
-`js/data.js`.
+### Product tiles
+
+All 54 product tiles are studio photographs, built by
+
+```bash
+python tools/import_product_photos.py             # all 54
+python tools/import_product_photos.py --only jaw  # one category
+python tools/import_product_photos.py --dry-run
+```
+
+It reads `../SRMD-product-images/` (a `manifest.csv` plus one folder per
+category, holding full-resolution masters under `_originals/`) and writes
+`asset/images/parts/<category key>-<item img>.webp`, taken from `js/data.js`.
+Nothing in the site code changes - the filenames are the same ones the poster
+crops used, so `render.js` and `data.js` are untouched.
+
+The tiles use the same geometry and encoder as the extractor - autocropped,
+padded onto a 200px square white canvas, lightly sharpened, WebP quality 80 -
+and the importer adds one step the crops did not need. `.cat__item img` is
+composited with `mix-blend-mode: multiply`, so the tile background has to be
+*paper* white: a studio sweep that photographs as near-white would show up as
+a tinted square sitting on the white card. `whiten_studio()` scales the whole
+frame by one white point taken from the darkest corner of the sweep, which
+lifts the field clean while leaving the contact shadow as a soft gradient that
+multiply then renders as a real shadow. Thresholding instead leaves a halo
+where the shadow meets the sweep.
+
+For the same reason a product tile must be a single object isolated on white.
+A full-bleed scene - a hopper photographed in the yard, sky and gravel and all
+- renders as a dark square in the grid, which is why the Crusher Plant
+Equipment units are shot on white too even though they weigh several tonnes.
+
+All 54 together are 209 KB, against 96 KB for the poster crops they replaced.
+That is the entire cost of the change: 113 KB spread across six categories
+that are lazy-loaded and, below 900px, collapsed behind an accordion.
+
+To swap one tile by hand instead, overwrite `asset/images/parts/<key>-<img>.webp`
+keeping the name, at 200x200 on a white background.
 
 ## Mobile catalogue
 
