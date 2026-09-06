@@ -8,7 +8,7 @@
   ns.company = {
     name: 'SRMD India Solution',
     tagline: 'Quality & Trusted Solution',
-    address: 'Ateli Mandi - 123021, Haryana, India',
+    address: 'Power House, Ateli Mandi - 123021, Haryana, India',
     phones: ['94675 44433', '85058 88809'],
     email: 'srmdindia@gmail.com',
     website: 'srmdindia.com',
