@@ -26,6 +26,8 @@ asset/images/
   logo.png              logo rendered from the supplied Logo.pdf
   logo-light.png        same logo recoloured for the dark footer
   favicon.png           gear mark
+  logo-512.png          raster logo for the Organization schema
+  og-cover.jpg          1200x630 share card (og:image / twitter:image)
   machines/*.webp       6 category banner photos
   parts/*.webp          54 product photos on white
   about/*.webp          hero, parts collage, plant photos, inspection photo
@@ -38,6 +40,7 @@ tools/
   import_product_photos.py  builds the 54 part tiles from supplied photos
   build_brand.py        logo.svg / logo-light.svg / favicon.png from logo.pdf
   build_fonts.py        downloads + subsets Inter, Barlow Condensed, Orbitron
+  build_social.py       logo-512.png + og-cover.jpg (schema + share card)
 ```
 
 ## Performance budget
@@ -51,6 +54,10 @@ The whole page, cold, with every image and nothing cached:
 | All 66 images (WebP) | 663 KB |
 | **Full page** | **~760 KB** |
 | First screen only | ~198 KB |
+
+`og-cover.jpg` and `logo-512.png` (90 KB together) are not counted above: they
+are fetched by social scrapers and Google's structured-data crawler, never by a
+visitor loading the page.
 
 Third-party requests: **zero**. Nothing is fetched from Google, a CDN, or an
 analytics host, so there is no extra DNS + TLS handshake before text can paint.

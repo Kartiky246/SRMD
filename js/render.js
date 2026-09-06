@@ -164,8 +164,12 @@
     var phones = join(c.phones, function (p) {
       return '<li><a href="tel:+91' + p.replace(/\s/g, '') + '">+91 ' + esc(p) + '</a></li>';
     });
+    /* The domain is spelled out as visible text on purpose: people search the
+       bare "srmdindia.com", and the string appeared nowhere a crawler could
+       read it - only in <link> and <meta> attributes. */
     return '<li>' + c.locations.map(esc).join(' &middot; ') + '</li>' + phones +
-           '<li><a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></li>';
+           '<li><a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></li>' +
+           '<li><a href="https://' + esc(c.website) + '/">' + esc(c.website) + '</a></li>';
   }
 
   /* Attribute level bindings ---------------------------------------------- */

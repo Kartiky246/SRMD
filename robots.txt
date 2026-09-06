@@ -1,4 +1,11 @@
+# https://srmdindia.com/robots.txt
+# Static marketing site - everything is public and everything should be
+# crawlable. CSS, JS and images are deliberately NOT blocked: Google renders
+# the page before indexing it, and a blocked stylesheet makes it look broken.
+
 User-agent: *
 Allow: /
+
+# No crawl-delay - it is ignored by Google and only slows the others down.
 
 Sitemap: https://srmdindia.com/sitemap.xml

@@ -1,20 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SRMD India Solution | Crusher Spare Parts &amp; Plant Equipment</title>
-<meta name="description" content="SRMD India Solution supplies high quality jaw, cone and VSI crusher spare parts, vibrating screen parts, conveyor systems and complete crusher plant equipment across India. Quality &amp; Trusted Solution.">
+<meta name="description" content="SRMD India Solution supplies jaw, cone and VSI crusher spare parts, vibrating screen parts, conveyors and complete plant equipment across India.">
 <meta name="theme-color" content="#0d2a5e">
-<meta name="robots" content="index, follow">
 <link rel="canonical" href="https://srmdindia.com/">
 
-<!-- Social preview -->
+<!-- Indexing. max-image-preview:large is what lets a brand result carry a
+     photo instead of a text-only line. -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+<!-- Brand + geography. These do not rank on their own, they disambiguate:
+     "SRMD" alone belongs to a much older organisation, so every signal here
+     names the full entity and ties it to India. -->
+<meta name="author" content="SRMD India Solution">
+<meta name="application-name" content="SRMD India Solution">
+<meta name="apple-mobile-web-app-title" content="SRMD India Solution">
+<meta name="geo.region" content="IN-HR">
+<meta name="geo.placename" content="Ateli Mandi, Haryana">
+
+<!-- Social preview. og:image is a 1200x630 JPEG on purpose: several scrapers
+     (X and older WhatsApp among them) will not decode WebP, and a card that
+     fails to render costs a share. Built by tools/build_social.py. -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="SRMD India Solution | Crusher Spare Parts &amp; Equipment">
-<meta property="og:description" content="Perfect spare parts &amp; equipments for crusher plants. Quality tested, exact fit, pan India supply.">
-<meta property="og:image" content="https://srmdindia.com/asset/images/about/hero.webp">
+<meta property="og:site_name" content="SRMD India Solution">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="SRMD India Solution | Crusher Spare Parts &amp; Plant Equipment">
+<meta property="og:description" content="Jaw, cone and VSI crusher spares, vibrating screen parts, conveyor systems and complete plant equipment. Supplied across India from Ateli Mandi, Haryana.">
 <meta property="og:url" content="https://srmdindia.com/">
+<meta property="og:image" content="https://srmdindia.com/asset/images/og-cover.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SRMD India Solution - crusher spare parts and plant equipment">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SRMD India Solution | Crusher Spare Parts &amp; Plant Equipment">
+<meta name="twitter:description" content="Jaw, cone and VSI crusher spares, vibrating screen parts, conveyor systems and complete plant equipment. Supplied across India.">
+<meta name="twitter:image" content="https://srmdindia.com/asset/images/og-cover.jpg">
+<meta name="twitter:image:alt" content="SRMD India Solution - crusher spare parts and plant equipment">
 
 <link rel="icon" href="asset/images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="asset/images/favicon.png">
@@ -275,7 +302,7 @@
 
       <form class="card contact__form reveal" data-enquiry-form novalidate>
         <h3>Send an Enquiry</h3>
-Fill in the details below, and send your enquiry directly via WhatsApp or email
+<!-- Fill in the details below, and send your enquiry directly via WhatsApp or email -->
         <div class="form-row">
           <div class="field">
             <label for="f-name">Your Name *</label>
@@ -374,33 +401,113 @@ Fill in the details below, and send your enquiry directly via WhatsApp or email
   </button>
 </div>
 
-<!-- Structured data for local search -->
+<!-- Structured data ---------------------------------------------------------
+     One @graph with three nodes wired together by @id, which is what lets
+     Google treat them as one entity rather than three loose annotations:
+
+       #organization  the business itself - the node a Knowledge Panel is built
+                      from. alternateName carries the spellings people actually
+                      type ("SRMD India Solutions" with an s, "SRMD India").
+       #website       the site, publisher-> #organization, so the domain and
+                      the company are bound to each other.
+       #webpage       this page, isPartOf-> #website, about-> #organization.
+
+     No SearchAction: there is no site search, and Google retired the sitelinks
+     searchbox in 2023 - declaring one it cannot use is a wasted claim.
+     sameAs is the single strongest Knowledge Graph signal and is currently
+     empty; fill it the moment the profiles below exist. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "SRMD India Solution",
-  "description": "Supplier of crusher spare parts and crushing plant equipment - jaw, cone and VSI crusher spares, vibrating screen parts and conveyor systems.",
-  "slogan": "Quality & Trusted Solution",
-  "url": "https://srmdindia.com/",
-  "email": "srmdindia@gmail.com",
-  "telephone": "+91-85058-88809",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Ateli Mandi",
-    "addressLocality": "Ateli Mandi",
-    "addressRegion": "Haryana",
-    "postalCode": "123021",
-    "addressCountry": "IN"
-  },
-  "areaServed": [
-    { "@type": "City", "name": "New Delhi" },
-    { "@type": "City", "name": "Jaipur" },
-    { "@type": "City", "name": "Lucknow" },
-    { "@type": "City", "name": "Bhopal" },
-    { "@type": "City", "name": "Gwalior" },
-    { "@type": "City", "name": "Dehradun" },
-    { "@type": "Country", "name": "India" }
+  "@graph": [
+    {
+      "@type": ["Organization", "LocalBusiness"],
+      "@id": "https://srmdindia.com/#organization",
+      "name": "SRMD India Solution",
+      "alternateName": ["SRMD India Solutions", "SRMD India", "SRMD India Solution"],
+      "legalName": "SRMD India Solution",
+      "url": "https://srmdindia.com/",
+      "slogan": "Quality & Trusted Solution",
+      "description": "SRMD India Solution supplies crusher spare parts and crushing plant equipment - jaw, cone and VSI crusher spares, vibrating screen parts, conveyor systems and complete plant equipment - to stone crushing and mineral processing plants across India.",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://srmdindia.com/#logo",
+        "url": "https://srmdindia.com/asset/images/logo-512.png",
+        "contentUrl": "https://srmdindia.com/asset/images/logo-512.png",
+        "width": 512,
+        "height": 512,
+        "caption": "SRMD India Solution"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://srmdindia.com/asset/images/og-cover.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "email": "srmdindia@gmail.com",
+      "telephone": "+91-85058-88809",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Ateli Mandi",
+        "addressLocality": "Ateli Mandi",
+        "addressRegion": "Haryana",
+        "postalCode": "123021",
+        "addressCountry": "IN"
+      },
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "telephone": "+91-85058-88809",
+        "email": "srmdindia@gmail.com",
+        "contactType": "sales",
+        "areaServed": "IN",
+        "availableLanguage": ["en", "hi"]
+      }],
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "09:00",
+        "closes": "19:00"
+      }],
+      "areaServed": [
+        { "@type": "City", "name": "New Delhi" },
+        { "@type": "City", "name": "Jaipur" },
+        { "@type": "City", "name": "Lucknow" },
+        { "@type": "City", "name": "Bhopal" },
+        { "@type": "City", "name": "Gwalior" },
+        { "@type": "City", "name": "Dehradun" },
+        { "@type": "Country", "name": "India" }
+      ],
+      "knowsAbout": [
+        "Jaw crusher spare parts",
+        "Cone crusher spare parts",
+        "VSI crusher spare parts",
+        "Vibrating screen parts",
+        "Conveyor systems",
+        "Crusher plant equipment"
+      ],
+      "sameAs": []
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://srmdindia.com/#website",
+      "url": "https://srmdindia.com/",
+      "name": "SRMD India Solution",
+      "alternateName": "srmdindia.com",
+      "description": "Crusher spare parts and plant equipment supplier in India.",
+      "inLanguage": "en-IN",
+      "publisher": { "@id": "https://srmdindia.com/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://srmdindia.com/#webpage",
+      "url": "https://srmdindia.com/",
+      "name": "SRMD India Solution | Crusher Spare Parts & Plant Equipment",
+      "description": "Jaw, cone and VSI crusher spares, vibrating screen parts, conveyor systems and complete crusher plant equipment, supplied across India.",
+      "inLanguage": "en-IN",
+      "isPartOf": { "@id": "https://srmdindia.com/#website" },
+      "about": { "@id": "https://srmdindia.com/#organization" },
+      "primaryImageOfPage": { "@id": "https://srmdindia.com/#logo" }
+    }
   ]
 }
 </script>
