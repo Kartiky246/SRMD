@@ -89,6 +89,7 @@ SUPPLIED = {
     "about/quality.webp",
     "machines/jaw.webp",
     "machines/cone.webp",
+    "machines/vsi.webp",
     "machines/screen.webp",
     "machines/conveyor.webp",
     "machines/plant.webp",

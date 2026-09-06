@@ -26,9 +26,9 @@ asset/images/
   logo.png              logo rendered from the supplied Logo.pdf
   logo-light.png        same logo recoloured for the dark footer
   favicon.png           gear mark
-  machines/*.jpg        6 category banner photos
-  parts/*.jpg           54 product photos on white
-  about/*.jpg           hero collage, plant photos, inspection photo
+  machines/*.webp       6 category banner photos
+  parts/*.webp          54 product photos on white
+  about/*.webp          hero, parts collage, plant photos, inspection photo
   source/catalogue.jpg  the printed catalogue artwork (master)
 asset/fonts/            self-hosted subset webfonts (woff2)
 tools/
@@ -45,14 +45,14 @@ The whole page, cold, with every image and nothing cached:
 |---|---|
 | HTML + CSS + JS + logos | 37 KB (gzipped by GitHub Pages) |
 | Fonts (2 families, subset) | 57 KB |
-| All 67 images (WebP) | 284 KB |
-| **Full page** | **~382 KB** |
-| First screen only | ~180 KB |
+| All 66 images (WebP) | 503 KB |
+| **Full page** | **~600 KB** |
+| First screen only | ~195 KB |
 
 Third-party requests: **zero**. Nothing is fetched from Google, a CDN, or an
 analytics host, so there is no extra DNS + TLS handshake before text can paint.
 
-Against the GitHub Pages soft limit of 100 GB/month that is roughly **270,000
+Against the GitHub Pages soft limit of 100 GB/month that is roughly **170,000
 full page views a month** before bandwidth is a concern - and most visitors cost
 far less, because only the images they scroll to are downloaded. The repo is
 about 2 MB against a 1 GB limit. Neither limit is a practical risk.
@@ -64,7 +64,7 @@ about 2 MB against a 1 GB limit. Neither limit is a practical risk.
   native size - past that you pay bytes for detail that does not exist. If you
   drop in your own photograph, save it as WebP no wider than ~1000px.
 - **Everything below the first screen is `loading="lazy"`.** A visitor who never
-  scrolls past the hero downloads 4 images, not 67.
+  scrolls past the hero downloads 2 images, not 66.
 - **Fonts are self-hosted and subset** to latin + punctuation, and Inter ships
   as one variable file covering every weight. `font-display: swap` means text
   is never invisible while they load.
@@ -109,8 +109,9 @@ being 1024px wide.
 
 ## Supplied photographs
 
-Eight images are real photographs rather than poster crops. They are listed in
-`SUPPLIED` at the top of `tools/extract_images.py`, and `save()` refuses to
+All nine of the site's large photographs are real pictures rather than poster
+crops. They are listed in `SUPPLIED` at the top of `tools/extract_images.py`,
+and `save()` refuses to
 write anything in that set, so re-running the extractor can never overwrite
 them. Drop a name from the set to hand that image back to the poster.
 
@@ -121,11 +122,10 @@ them. Drop a name from the set to hand that image back to the poster.
 | `about/quality.webp` | Quality Control | 548px | 1000px, quality 78 | 33 KB |
 | `machines/jaw.webp` | category banner | 686px | 740px, quality 76 | 30 KB |
 | `machines/cone.webp` | category banner | 686px | 740px, quality 76 | 32 KB |
+| `machines/vsi.webp` | category banner | 686px | 740px, quality 76 | 28 KB |
 | `machines/screen.webp` | category banner | 686px | 740px, quality 76 | 26 KB |
 | `machines/conveyor.webp` | category banner | 686px | 740px, quality 76 | 32 KB |
 | `machines/plant.webp` | category banner | 686px | 740px, quality 76 | 37 KB |
-
-`machines/vsi.webp` is still a poster crop - see the note below.
 
 Each is sized against the widest box it is actually *displayed* in, which is
 often not the desktop one. `parts-range` renders at 522px on a desktop but
