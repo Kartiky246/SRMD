@@ -238,7 +238,7 @@ page updates; no HTML editing needed.
 ```js
 ns.company = {
   phones: ['94675 44433', '85058 88809'],
-  email: 'srmdindia@gmail.com',
+  email: 'info@srmdindia.com',
   whatsapp: '918505888809',   // country code + number, digits only -
                               // must be a number registered on WhatsApp
   ...

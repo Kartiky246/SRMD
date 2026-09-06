@@ -16,7 +16,7 @@
        links and the JSON-LD, and it is the number registered on WhatsApp, so
        calls and chats both land in the same place. */
     phones: ['85058 88809', '94675 44433'],
-    email: 'srmdindia@gmail.com',
+    email: 'info@srmdindia.com',
     website: 'srmdindia.com',
     /* Country code + number, digits only - matches phones[0]. */
     whatsapp: '918505888809',
