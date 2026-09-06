@@ -3,12 +3,13 @@ extract_images.py — slices the printed catalogue artwork into the individual
 images used by the website.
 
 Source : asset/images/source/catalogue.jpg  (the catalogue poster)
-NOTE   : asset/images/about/quality.webp is NOT produced here - it does not come
-         from the poster (see README), so this script leaves it alone.
+NOTE   : asset/images/about/hero.webp and asset/images/about/quality.webp are
+         NOT produced here - they are supplied photographs, not poster crops
+         (see README), so this script leaves them alone.
 
 Output : asset/images/machines/*.webp  category banner photos
          asset/images/parts/*.webp     54 product tiles (white background)
-         asset/images/about/*.webp     plant photos + hero collage
+         asset/images/about/*.webp     plant photos + the parts collage
 
 Everything is written as WebP, sized for the largest box it is displayed in on
 a 2x screen - shipping a 1536px photo into a 400px slot was the single most
@@ -76,7 +77,7 @@ PHOTOS = {
     "about/plant-1": (812, 16, 1016, 134),
     "about/plant-2": (812, 168, 1016, 286),
     "about/plant-3": (812, 306, 1016, 424),
-    "about/hero":    (10, 252, 522, 494),
+    "about/parts-range": (10, 252, 522, 494),
     "machines/plant": (812, 306, 1016, 424),
 }
 
@@ -89,13 +90,13 @@ PHOTO_Q = 78          # quality for the large photographs
 
 # The poster is only 1024px wide, so a crop has a hard limit on real detail.
 # Enlarging past this multiple of the native crop invents nothing and costs a
-# lot of bytes - the hero was 90 KB at 2x and is 64 KB at 1.5x, indistinguishable.
+# lot of bytes - parts-range was 90 KB at 2x and is 64 KB at 1.5x, indistinguishable.
 MAX_UPSCALE = 1.5
 
 # Longest edge each stand-alone photo is ever displayed at, doubled for 2x
 # screens. Anything larger is wasted bytes.
 PHOTO_W = {
-    "about/hero": 760,
+    "about/parts-range": 760,
     "about/plant-1": 330,
     "about/plant-2": 330,
     "about/plant-3": 330,
@@ -119,7 +120,7 @@ def resize_to_width(img, width):
 
 def sharpen(img):
     """Light touch: heavy sharpening adds high-frequency noise that WebP then
-    has to spend real bytes encoding (26 KB on the hero image alone)."""
+    has to spend real bytes encoding (26 KB on the parts collage alone)."""
     return img.filter(ImageFilter.UnsharpMask(radius=1.2, percent=70, threshold=3))
 
 

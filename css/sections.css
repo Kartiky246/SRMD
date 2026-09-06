@@ -43,7 +43,7 @@
   font-size: clamp(1.35rem, 2.4vw, 1.95rem);
   line-height: 1.25; font-weight: 600;
   color: #fff; text-transform: uppercase; letter-spacing: .02em;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 .hero__text { max-width: 54ch; margin-bottom: 26px; }
 .hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 26px; }
