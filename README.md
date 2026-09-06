@@ -107,31 +107,50 @@ re-running the script produces sharper images with no code changes. That is the
 single best upgrade available: the current tiles are limited by the source
 being 1024px wide.
 
-Three files are supplied photographs rather than poster crops, and the
-extractor deliberately leaves them alone, so re-running it will not overwrite
-them:
+## Supplied photographs
 
-| file | where | widest slot | encoded at |
-| --- | --- | --- | --- |
-| `about/hero.webp` | hero panel | 475px | 860px wide, quality 72 |
-| `about/parts-range.webp` | About collage | 858px | 940px wide, quality 74 |
-| `about/quality.webp` | Quality Control | 548px | 1000px wide, quality 78 |
+Eight images are real photographs rather than poster crops. They are listed in
+`SUPPLIED` at the top of `tools/extract_images.py`, and `save()` refuses to
+write anything in that set, so re-running the extractor can never overwrite
+them. Drop a name from the set to hand that image back to the poster.
 
-Each is sized against the widest box it is actually displayed in, which is not
-always the desktop one - `parts-range` renders at 522px on a desktop but at
-858px in the 721-900px band, where the About collage goes single column, so it
-is sized for the tablet case rather than the desktop case. Quality is traded
-down where the picture can afford it: the hero is the LCP image and holds near
-72 KB, and on these photographs 72-74 is indistinguishable from 78 while
-costing 10-25 KB less. To replace one:
+| file | where | widest slot | encoded at | size |
+| --- | --- | --- | --- | --- |
+| `about/hero.webp` | hero panel | 475px | 860px, quality 72 | 72 KB |
+| `about/parts-range.webp` | About collage | 858px | 940px, quality 74 | 87 KB |
+| `about/quality.webp` | Quality Control | 548px | 1000px, quality 78 | 33 KB |
+| `machines/jaw.webp` | category banner | 686px | 740px, quality 76 | 30 KB |
+| `machines/cone.webp` | category banner | 686px | 740px, quality 76 | 32 KB |
+| `machines/screen.webp` | category banner | 686px | 740px, quality 76 | 26 KB |
+| `machines/conveyor.webp` | category banner | 686px | 740px, quality 76 | 32 KB |
+| `machines/plant.webp` | category banner | 686px | 740px, quality 76 | 37 KB |
+
+`machines/vsi.webp` is still a poster crop - see the note below.
+
+Each is sized against the widest box it is actually *displayed* in, which is
+often not the desktop one. `parts-range` renders at 522px on a desktop but
+858px in the 721-900px band where the About collage goes single column. The
+category banners are only 369px on a desktop but 686px in that same band, so
+740px is 2x the desktop case and roughly 1x the tablet one - going to a true 2x
+of 686px would mean six 1372px images for a decorative strip.
+
+Quality is traded down where the picture can afford it: the hero is the LCP
+image and holds near 72 KB, and on these photographs 72-76 is indistinguishable
+from 78 while costing 10-25 KB less. To replace one:
 
     python -c "from PIL import Image; im=Image.open('new.png').convert('RGB'); \
-      w=940; im.resize((w, round(im.height*w/im.width)), Image.LANCZOS) \
-      .save('asset/images/about/parts-range.webp', format='WEBP', quality=74, method=6)"
+      w=740; im.resize((w, round(im.height*w/im.width)), Image.LANCZOS) \
+      .save('asset/images/machines/jaw.webp', format='WEBP', quality=76, method=6)"
 
-Then update the `width`/`height` attributes on that `img` in `index.html` to the
-new pixel size, so the browser still reserves the right box and nothing shifts
-while it loads.
+The banner box is `aspect-ratio: 16/6` on a desktop and `16/7` on a phone, and
+the image is `object-fit: cover`, so a source wider than 16/7 needs no cropping
+- the browser trims the sides. A source *taller* than 16/7 should be centre
+cropped to it first, otherwise you pay bytes for pixels no viewport ever shows.
+
+For the stand-alone photographs in `index.html`, also update the `width`/
+`height` attributes on that `img` to the new pixel size, so the browser still
+reserves the right box and nothing shifts while it loads. The category banners
+do not need this - `.cat__banner` fixes the ratio in CSS.
 
 To use a real photograph for one part instead, just overwrite its file — for
 example `asset/images/parts/cone-mantle.jpg` — keeping the name. Nothing in the

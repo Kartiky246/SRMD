@@ -3,9 +3,9 @@ extract_images.py — slices the printed catalogue artwork into the individual
 images used by the website.
 
 Source : asset/images/source/catalogue.jpg  (the catalogue poster)
-NOTE   : about/hero.webp, about/parts-range.webp and about/quality.webp are
-         NOT produced here - they are supplied photographs, not poster crops
-         (see README), so this script leaves them alone.
+NOTE   : the files listed in SUPPLIED below are real photographs, not poster
+         crops. save() refuses to write them, so a re-run can never overwrite
+         artwork the 1024px poster could not match. See the README.
 
 Output : asset/images/machines/*.webp  category banner photos
          asset/images/parts/*.webp     54 product tiles (white background)
@@ -80,6 +80,20 @@ PHOTOS = {
     "machines/plant": (812, 306, 1016, 424),
 }
 
+# Real photographs that replaced their poster crop. Keyed exactly as save()
+# is called, so one guard covers banners and stand-alone photos alike; drop a
+# name from this set to hand that image back to the extractor.
+SUPPLIED = {
+    "about/hero.webp",
+    "about/parts-range.webp",
+    "about/quality.webp",
+    "machines/jaw.webp",
+    "machines/cone.webp",
+    "machines/screen.webp",
+    "machines/conveyor.webp",
+    "machines/plant.webp",
+}
+
 INSET = 7             # px trimmed off each cell edge (borders / separators)
 PAD = 6               # white padding kept around an autocropped part
 TILE = 200            # tile output size (~108 CSS px on a phone)
@@ -123,6 +137,8 @@ def sharpen(img):
 
 
 def save(img, rel, quality=PHOTO_Q):
+    if rel in SUPPLIED:
+        return None
     path = os.path.join(ROOT, "asset", "images", rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     img.convert("RGB").save(path, format="WEBP", quality=quality, method=6)
@@ -262,6 +278,7 @@ def main():
         crop = resize_to_width(crop, PHOTO_W.get(rel, 800))
         written.append(save(sharpen(crop), rel + ".webp"))
 
+    written = [p for p in written if p]        # SUPPLIED files return None
     print("wrote %d files" % len(written))
     for p in written[:5]:
         print("  ", os.path.relpath(p, ROOT))
