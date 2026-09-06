@@ -31,10 +31,12 @@ asset/images/
   about/*.webp          hero, parts collage, plant photos, inspection photo
   source/catalogue.jpg  the printed catalogue artwork (master)
 asset/fonts/            self-hosted subset webfonts (woff2)
+                        Inter = body, Barlow Condensed = headings,
+                        Orbitron = the company name (matches the visiting card)
 tools/
   extract_images.py     slices source/catalogue.jpg into the images above
   build_brand.py        logo.svg / logo-light.svg / favicon.png from logo.pdf
-  build_fonts.py        downloads + subsets Inter and Barlow Condensed
+  build_fonts.py        downloads + subsets Inter, Barlow Condensed, Orbitron
 ```
 
 ## Performance budget
@@ -44,10 +46,10 @@ The whole page, cold, with every image and nothing cached:
 | | over the wire |
 |---|---|
 | HTML + CSS + JS + logos | 37 KB (gzipped by GitHub Pages) |
-| Fonts (2 families, subset) | 57 KB |
+| Fonts (3 families, subset) | 60 KB |
 | All 66 images (WebP) | 503 KB |
 | **Full page** | **~600 KB** |
-| First screen only | ~195 KB |
+| First screen only | ~198 KB |
 
 Third-party requests: **zero**. Nothing is fetched from Google, a CDN, or an
 analytics host, so there is no extra DNS + TLS handshake before text can paint.
@@ -67,7 +69,8 @@ about 2 MB against a 1 GB limit. Neither limit is a practical risk.
   scrolls past the hero downloads 2 images, not 66.
 - **Fonts are self-hosted and subset** to latin + punctuation, and Inter ships
   as one variable file covering every weight. `font-display: swap` means text
-  is never invisible while they load.
+  is never invisible while they load. Orbitron sets the company name and
+  nothing else, so it is subset to letters and digits only and costs 3.4 KB.
 - **No embedded map.** Google's embed pulls well over a megabyte and sets
   cookies. The contact column lists the cities we operate in instead, which is
   what a plant buyer actually wants to know, and costs nothing.

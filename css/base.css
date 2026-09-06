@@ -27,6 +27,16 @@
   font-style: normal;
   font-display: swap;
 }
+/* Wordmark face - the squared, extended letterforms of the printed visiting
+   card. It sets the company name and nothing else, so it is subset to letters
+   and digits and lands at 3.4 KB. */
+@font-face {
+  font-family: "Orbitron";
+  src: url("../asset/fonts/orbitron-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* Brand */
@@ -51,6 +61,7 @@
 
   /* Type */
   --font-display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-brand: "Orbitron", "Eurostile", "Bank Gothic", var(--font-display);
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
   /* Space + shape */
@@ -103,6 +114,13 @@ h1, h2, h3, h4 {
 }
 h1 { font-size: clamp(2.4rem, 5.2vw, 4rem); }
 h2 { font-size: clamp(1.9rem, 3.6vw, 2.85rem); }
+
+/* The company name, set in the wordmark face off the printed visiting card.
+   Orbitron runs far wider than Barlow Condensed at the same size, so it needs
+   its own ramp - on the h1 clamp the name would overflow the line on a phone. */
+.wordmark { font-family: var(--font-brand); letter-spacing: 0; }
+h1.wordmark { font-size: clamp(1.5rem, 3.5vw, 2.65rem); }
+h2.wordmark { font-size: clamp(1.35rem, 3vw, 2.4rem); }
 h3 { font-size: clamp(1.15rem, 1.8vw, 1.4rem); }
 p  { margin: 0 0 1rem; }
 p:last-child { margin-bottom: 0; }

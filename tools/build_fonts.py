@@ -1,5 +1,5 @@
 """
-build_fonts.py — self-hosts the two web fonts, subset to the characters this
+build_fonts.py — self-hosts the three web fonts, subset to the characters this
 site actually needs.
 
 Why: loading fonts from fonts.googleapis.com costs two extra DNS+TLS
@@ -32,6 +32,9 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 FAMILIES = {
     "Inter": [400, 600, 700],
     "Barlow Condensed": [600, 700],
+    # The wordmark face, matched to the printed visiting card. It sets the
+    # company name and nothing else, so it is subset to letters and digits.
+    "Orbitron": [700],
 }
 
 # Basic latin + the punctuation, symbols and accents a page like this can hit.
@@ -43,6 +46,11 @@ UNICODES = ",".join([
     "U+20AC", "U+20B9",   # euro, rupee
     "U+2122", "U+2212", "U+2215", "U+FEFF", "U+FFFD",
 ])
+
+# A display face that only ever sets the company name does not need the
+# accents, currency symbols and dashes the body text can hit.
+WORDMARK_UNICODES = "U+0020,U+0026,U+002C-002E,U+0030-0039,U+0041-005A,U+0061-007A"
+NARROW = {"Orbitron"}
 
 
 def google_css(family, weights):
@@ -93,7 +101,7 @@ def main():
             dest = os.path.join(OUT, "%s-%d.woff2" % (slug, w))
             pyftsubset([
                 tmp,
-                "--unicodes=" + UNICODES,
+                "--unicodes=" + (WORDMARK_UNICODES if family in NARROW else UNICODES),
                 "--layout-features=kern,liga,calt",
                 "--flavor=woff2",
                 "--no-hinting",
