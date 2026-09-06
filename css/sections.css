@@ -26,7 +26,11 @@
   position: relative; z-index: 1;
   display: grid; grid-template-columns: 1.05fr .95fr;
   gap: clamp(28px, 4vw, 56px); align-items: center;
-  padding: clamp(56px, 7vw, 92px) 0;
+  /* padding-block only - this element is also a .container, and the padding
+     shorthand would reset its inline gutter to 0. Invisible on a wide screen
+     where the container is centred, but on a phone the container is full
+     bleed and the headline ends up flush against the edge of the screen. */
+  padding-block: clamp(56px, 7vw, 92px);
 }
 .hero h1 { color: #fff; margin-bottom: 14px; text-transform: uppercase; }
 .hero h1 span { color: var(--green-500); }
